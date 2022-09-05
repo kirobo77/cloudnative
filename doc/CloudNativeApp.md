@@ -1989,7 +1989,7 @@ https://spring.io/projects/spring-cloud
 
 - 개발자 자신의 랩톱, 베어메탈 데이터 센터 및 Cloud Foundry와 같은 관리 플랫폼을 포함한 모든 분산 환경에서 잘 작동한다.
 
-  
+  https://bryceyangs.github.io/study/2021/07/28/MSA-SpringCloud-vs-Kubernetes/
 
 ### 4.4.2 특징
 
