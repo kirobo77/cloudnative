@@ -764,27 +764,7 @@ Cloud Native TrailMap
 
  CNCF가 제시한 클라우드 네이티브 참조 아키텍처를 바탕으로 애플리케이션 아키텍처에 대한 구체적인 내용에 대해 설명한다.
 
-## 3.1  마이크로서비스의 특징
-
-- 일반적으로 하나의 **클라우드 네이티브 애플리케이션은 다수의 마이크로서비스로 구성**된다.
-
--  **마이크로서비스 아키텍처는 기본적으로 마이크로서비스마다 고유한 프로그래밍 언어, 데이터베이스 및 스토리지**를 가지고 있다. 
-
-- 각 마이크로서비스가 가지는 서비스의 특성에 따라 프로그래밍 언어가 선택되고, 다른 마이크로서비스가 관리하는 데이터 베이스와 스토리지에 직접 액세스할 수 없도록 설계하기 때문에, **서비스간의 통신과 데이터베이스에 엑세스하기 위해서는 직접 엑세스하는 방식이 아닌 공개 API를 이용 하여 통신**하는 것을 권장한다. 이러한 마이크로서비스의 특징을 정리하면 다음과 같다.
-
-  ◾  분리된 프로세스: 개별 마이크로서비스는 별도의 프로세스에 의해 실행되어, 서비스간의 의존성을 작게 할 수 있다.
-
-  ◾  API 통신: 마이크로서비스 구축을 위해 서로 다른 프로그래밍 언어를 이용하여 개발될 수 있으며, 각 마이크로서비스 간의 통신은 API를 통해 이뤄지게 된다.
-
-  ◾  독립적인 배포: 각 서비스마다 별도의 개발 및 유지 관리 계획을 세울 수 있으며, 서비스의 규모를 작게 하여 프로그램의 복잡성을 줄여 개발 유지 보수에 필요한 비용을 절감할 수 있다.
-
-- 애플리케이션의 신규 개발에 있어서, 반드시 마이크로서비스 아키텍처로 시작해야 한다는 것은 아니다. 전통적인 방식의 **모놀리스 아키텍처 스타일로 애플리케이션을 개발하는 것이 효율적**일 수도 있고, **서비스를 세분화 하여 마이크로서비스 아키텍처 스타일로 개발하는 것이 효율적**일 수 있다. 또는, 초기 애플리케이션을 **모놀리식 애플리케이션 방식으로 모듈화하고, 거기에 따른 서비스에 대한 문제 및 개선점이 요구될 때 해당 모듈을 마이크로서비스로 분할하는 방식**으로 전환하는 등 사용자의 요구사항 및 도메인 모델에 따라, 설계 방식을 달리해야 한다.
-
-- 마이크로서비스 아키텍처를 선택하기 전에 이러한 문제를 충분히 인식한 다음, 사용자 요구사항에 따른 도메인 설계와 서비스 경계를 구분해야하고, 그에 따른 시스템 구성을 해야 한다. 마이크로서비스에 대한 이러한 단점이나 복잡성에도 불구하고, **마이크로서비스 아키텍처는 기존의 단일 애플리케이션 개발 방식의 문제점 해결이나 고객의 새로운 요구사항, 애플리케이션의 개선 및 이슈 등에 따르게 대응할 수 있다는 장점으로 새로운 개발 아키텍처로써 빠르게 전파**되고 있다.
-
- 
-
-## 3.2  클라우드 네이티브 애플리케이션 구축 시 고려 사항
+## 3.1  클라우드 네이티브 애플리케이션 구축 시 고려 사항
 
 - 마이크로서비스 아키텍처를 이용하여 애플리케이션을 구축할 경우에 고려해야 할 가장 중요한 점은 **사용자의 요구사항에 따른 기능을 어떻게 분할하고 어떤 마이크로서비스 에 할당**하느냐에 대한 것이다. 사용자의 요구사항에 따른 각 **기능을 너무 세밀하게 분할하면 시스템의 오버헤드가 커지고, 반대로 마이크로 서비스를 너무 크게 분할하면 마이크로서비스의 장점을 충분히 사용할 수 없게 되며, 각 서비스에 대해 감시/모니터링 해야 할 대상이 늘어남에 따라 애플리케이션 운영에 대한 복잡성이 늘어나게 된다.**
 
@@ -802,7 +782,7 @@ Cloud Native TrailMap
 
  
 
-### 3.2.1  애플리케이션 설계
+### 3.1.1  애플리케이션 설계
 
 - 클라우드 네이티브 애플리케이션뿐만 아니라, 모든 애플리케이션의 가장 큰 요구 사항 중 하나는 속도에 대한 부분이다. 사용자(또는 고객)의 요구사항에 맞는 **애플리케이션 기능을 빠르게 제공하고 고객의 에러 및 이슈에 대해 수정해야하고, 이를 다시 시스템 에 반영하는 과정을 지속적으로 반복**해야 한다.
 
@@ -823,7 +803,7 @@ Cloud Native TrailMap
 
  
 
-### 3.2.2  API
+### 3.1.2  API
 
 - 마이크로서비스 아키텍처에서 서비스 경계로 구분된 각각의 **서비스간의 데이터 교환 방법은 아키텍처 설계 시 가장 중요하게 고려**해야 할 내용 중 한가지이다.
 - 서비스를 요청하는 클라이언트는 또 다른 마이크로서비스나 브라우저, 스마트 디바이스와 같은 장치일 수 있으며, 애플리케이션은 이러한 다양한 사용자들의 요청에 대한 적절한 응답을 해야 한다. 
@@ -841,7 +821,7 @@ Cloud Native TrailMap
 
  
 
-### 3.2.3  운영 설계
+### 3.1.3  운영 설계
 
 - 모놀리스 시스템 운영에서의 가장 큰 문제 중 하나는 **새로운 코드 릴리스를 실제 운영 환경(프로덕션)으로 옮길 때 발생하는 오버 헤드**이다. 
 - 마이크로 서비스를 이용하게 되면 **개발, 테스트, 운영 등으로 실행환경이 분할**되어 있을 뿐만 아니라, **새로운 코드의 변경 사항도 서비스 단위로 분리**되어 개발되고, 업데이트 되기 때문에, 변경 사항을 위한 빌드를 위해 **전체 애플리케이션을 재배포 하지 않아도 된다.** 
@@ -855,7 +835,7 @@ Cloud Native TrailMap
 
  
 
-### 3.2.4  데브옵스(DevOps)
+### 3.1.4  데브옵스(DevOps)
 
 - 오늘날의 IT 시스템은 개발, 애플리케이션 구축, QA, 운영 등을 포함하여 애플리케이션 각 수명주기를 책임지는 조직이나 팀 등에 의해 개발 및 운영되고 있다.대부분의 IT 조직에서는 각 팀들 간에 내부 최적화에 중점을 둔 고유 한 프로세스를 가지고 있을 수 있다. 
 - 한 팀에서 다른 팀으로 프로젝트의 결과물이 전달되면, 각 팀은 새로운 실행 환경에 따른 완전히 새로운 애플리케이션의 실행 파일(결과물)을 만들어 버리는 경우도 있고, 작업의 결과물을 전달 받은 조직에서 기존에 추가된 작업에 대해 수정작업을 해야 하는 경우도 있다. 
@@ -866,7 +846,7 @@ Cloud Native TrailMap
 
  
 
-### 2.2.5  테스트
+### 2.1.5  테스트
 
 - 대부분의 IT 조직에서의 검증과 테스트 작업은 담당하는 QA 그룹은 직원 수가 적거나 리소스가 부족한 경우가 많기 때문에, 애플리케이션 기능이 올바르게 작동하는지에 대한 테스트를 위한 작업도 부분적이고 수동적인 기능 테스트 밖에 할 수 없는 경우가 많다. 
 - IT조직은 배포 직전까지 QA를 수행하는데, 이러한 문제점으로 인해 최종 애플리케이션을 재작업 하거나, 만족스럽지 못한 코드를 배포하는 경우도 종종 발생 한다. 이러한 방식은 비즈니스를 기능을 지원하는 부가적인 애플리케이션에는 수용될 수 있지만 완전한 비즈니스 애플리케이션을 위해서는 허락 될 수 없다.
@@ -890,51 +870,7 @@ Cloud Native TrailMap
 
 - 기존 모노리스 환경에서 많이 적용하는 레이어드 아키텍처(Layered Architecture )에 대해 설명하고 최근의 마이크로서비스 설계자들이 마이크로서비스 내부구조를 유연하게 가져가기 위해 적용하고 있는 헥사고널 아키텍처(Hexagonal Architecture )와 클린 아키텍처(Clean Architecture)가 있다
 
-### 2.3.1 레이어드 아키텍처
-
-- 레이어드 아키텍처(계층 형 아키텍처:Layered Architecture)를 구성하는 레이어는 많은 사람들이 혼동하는 물리적인 티어(Tier)의 개념과 달리 논리적인 개념이다. 티어는 물리적인 장비, 서버 컴퓨터 등의 물리 층을 의미하고 레이어는 티어 내부의 논리적인 분할을 의미한다. 
-- 아래 그림과 같이 물리적인 서버 티어의 레이어(이하:계층)를 **프레젠테이션(Presentation) , 비지니스 로직(Business Logic), 데이터 액세스(Data Access)** 3개의 논리적인 계층으로 구분할 수 있다.
-
-![티어와 레이어](./assets/MSA_3.2.png)
-
-- 계층은 설계자들이 복잡한 시스템을 분리할 때 흔히 사용하는 패턴 중 하나로 어플리케이션이 내부에서 처리하는 관심사를 논리적으로 구분한다. 
-- 다음은 **마틴 파울러가 그의 책 ‘엔터프라이즈 애플리케이션 아키텍처 패턴(Enterprise Application Architecture Pattern)’ 에서 구분한 레이어드 아키텍처 패턴 전형적인 유형**이다. 아키텍트가 의도하는 방향에 따라 여러가지로 구분 가능하나 일반적으로 **프레젠테이션, 비즈니스 로직, 데이터 액세스**의 3계층으로 구분하는 경향이 일반적이다.
-
-![전통적인3계층 아키텍처](./assets/MSA_3.3.png)
-
-- 프레젠테이션 층의 관심사는 화면 표현 및 전환 처리이고 비즈니스 로직층의 관심사는 비즈니스 개념 및 규칙, 흐름 제어이며 데이터 액세스 층의 관심사는 데이터 처리이다.
-
-- 레이어드 아키텍처는 레이어 간 응집성을 높이고 의존도를 낮추기 위해 몇 가지의 규칙들을 가지고 있는데 다음과 같다.
-  - 상위 계층이 하위 계층을 호출하는 단 방향성을 유지한다.
-  - 상위 계층은 하위의 여러 계층을 모두 알 필요 없이 바로 밑의 근접 계층만 활용한다.
-  - 상위 계층이 하위 계층에 영향을 받지 않게 구성해야 한다.
-- 하위 계층은 자신을 사용하는 상위 계층을 알지 못하게 구성해야 한다.
-- 계층 간의 호출은 인터페이스를 통해 호출하는 것이 바람직하다. (구현 클래스에 직접 의존하지 않음으로써 약한 결합을 유지해야 한다.)
-
-![레이어드 아키텍처 규칙](./assets/MSA_3.4.png)
-
-- 특히 인터페이스를 통한 의존성 분리는 인터페이스를 구현하는 구현체를 다양하게 해주는 다형성을 추구함으로써 제어 흐름을 간접적으로 전환하게 해준다. 아래 그림을 보면 상위 계층은 직접적으로 하위 계층을 호출하지 않고 추상적인 인터페이스를 의존한다. 
-- 이럴 경우 하위레이어는 추상적 인터페이스를 만족하는 다양한 방식의 구현체를 선택적으로 적용할 수 있다.
-
-![인터페이스 호출을 통한 다형성 추구](./assets/MSA_3.5.png)
-
-- 이러한 방식은 로버트 C 마틴이 정의한 객체지향의 원칙의 **의존성 역전 원칙(Dependency Inversion Principle)** 을 만족하는 것처럼 보인다. 의존성 역전의 원칙은 ‘유연성이 극대화된 시스템’이란 소스 코드 의존성이 추상에 의존하며 구체에는 의존하지 않아야 한다’라고 말하기 때문이다.
-
-- 그렇지만 **개방 폐쇄의 원칙(OCP: Open-Closed Principle)** 까지 살펴본다면 문제가 있다. OCP는 소프트웨어 개체는 확장에는 열려 있어야 하고 변경에는 닫혀 있어야 한다는 원칙이다. 이는 **개체의 행위는 확장할 수 있어야 하지만 이때 개체를 변경해서는 안된다는 말**이다.
-
-- 그러나 계층 방식은 인터페이스를 통해 의존성을 낮춘다 해도, 일반적으로 추상적인 인터페이스가 각 계층의 제일 상위에 위치하는 구조로 제어의 흐름(Flow of Control)이 상위에서 하위로 흐르게 되고 이에 따른 소스코드의 의존성은 제어의 흐름을 따르게 된다. 따라서 **하위 계층의 유형이 추가되어 확장될 때 닫혀 있어야 할 상위계층이 의존을 받을 수 밖에 없다.**
-
-- 프레젠테이션, 비지니스로직, 데이터 액세스 의 3계층으로 살펴보면 제일 마지막에 있는 **데이터 액세스 계층이 변경되었을 때 비지니스로직 계층이 변경되면 안되는데 위의 그림을 보면 비지니스로직 계층의 클래스가 데이터 액세스 계층에 존재하는 인터페이스를 의존하기 때문에 데이터 계층의 영향을 받게 된다.**
-
-- 문제는 데이터 엑세스 인터페이스 위치이다. 데이터 엑세스 인터페이스는 데이터 엑세스 계층에 존재한다. 일면 당연해 보이지만 그런 방식은 항상 하위 계층에 의존해야 한다. 그렇지만 어플리케이션에서는 비지니스 로직이 핵심이라고 하였다. 즉 문제 중심 영역이다. 그렇기 때문에 비지니스 로직을 보통 고수준 영역이라고 하고 프레젠테이션 계층 및 데이터 액세스 계층을 저수준 영역이라고 한다. 고수준 영역은 문제 중심 영역이므로 보호를 받아야 하고 따라서 저수준 영역의 변경, 확장에 영향을 받지 않아야 한다. 그러나 위에서처럼 **일반적인 레이어드 아키텍처의 규칙만을 따르면 고수준 영역이 저수준영역에 의존하게 되고 영향을 받게 된다.**
-
-- 여기서 의존성의 역전 원칙(DIP)적용의 필요성이 생긴다. DIP는 데이터 액세스 계층에서 정의한 인터페이스의 위치를 경계 넘어 비지니스로직 계층으로 이동시킨다. 그러면 데이터 액세스 계층의 구현체는 비지니스 로직의 계층의 인터페이스를 바라볼 수 밖에 없다.
-
-- 즉 데이터 액세스 계층이 구현해야 할 인터페이스를 아래 그림과 같이 보다 **고수준의 비지니스 로직 계층에서 정의하게 함으로써 기존에 위에서 아래로 흘렀던 의존관계를 역전시키고 고수준이 저수준의 변경에 영향을 받지 않도록 해 주는 것**이다.
-
-![의존관계 역전의 적용](https://engineering-skcc.github.io/assets/images/msa/MSA_3.6.png)
-
-### 2.3.3 헥사고날 아키텍처
+### 2.3.1 헥사고날 아키텍처
 
 - 레이어드 아키텍처에 DIP를 적용해도 한계가 존재한다. 프레젠테이션 계층 와 데이터 액세스 계층을 보통 저수준 계층으로 정의한다고 했는데 **현대 어플리케이션의 활용은 이러한 2가지 계층 말고도 다양한 인터페이스를 필요**로 한다. 즉 어플리케이션을 호출하는 시스템의 유형과 어플리케이션과 상호작용하는 다양한 저장소가 존재한다. **헥사고날 아키텍처(육각형, Hexagonal Architecture)** 는 이러한 문제점을 해결할 수 있다.
 
@@ -950,22 +886,7 @@ Cloud Native TrailMap
 
 ![헥사고날 아키텍처의 포트 와 어답터](https://engineering-skcc.github.io/assets/images/msa/MSA_3.7.png)
 
-### 2.3.4 클린 아키텍처
-
-- 클린 아키텍처(Clean Architecture)는 **로버트 C 마틴이 제안한 아키텍처로 헥사고널 아키텍처의 아이디어와 매우 유사**하다. 앞서 언급한 것처럼 로버트는 소프트웨어는 행위적/구조적 두 종류의 가치를 가지며 구조적 가치가 더 중요하다고 말한다. 왜냐하면 소프트웨어를 부드럽게 만드는 것이 구조적 가치이기 때문이다. 그렇다면 소프트웨어를 부드럽게 유지하는 방법은 무엇일까? 즉 구조 중에 선택할 수 있는 것을 가능한 오랫동안 열어두는 것이다. 특히 열어둬야 할 선택사항은 바로 중요치 않은 세부사항이다.
-
-- 마틴은 아래 그림같이 **클린 아키텍처를 여러 겹의 둘러싸인 영역으로 표현하며 엔티티, 유스케이스, 그 외 세부사항으로 구분**한다.
-
-- 제일 중앙에는 **엔티티** 가 있다. 업무 규칙은 **사업적으로 수익을 얻거나 비용을 줄일 수 있는 규칙 또는 절차**를 말한다. 이런 업무 규칙은 수동으로 처리할 수 있지만 시스템으로도 자동화 할 수 있다. 예를 들면 쇼핑몰의 물건을 사고 파는 규칙, 은행의 이자 계산 규칙 ,도서대여 시스템의 대여/반납 규칙 등 모든 시스템에는 해당 **도메인의 업무를 규정하는 핵심 업무 규칙들이 존재**한다. 그리고 핵심업무규칙은 보통 데이터를 요구한다. 따라서 **핵심 규칙과 데이터는 본질적으로 결합되어 있기 때문에 객체로 쉽게 만들 수 있다. 이런 유형을 ‘엔티티’ 객체** 라 한다.
-
-- 그 다음 엔티티를 감싸는 객체는 **유스케이스**이다. 유스케이스는 **자동화된 시스템을 사용하는 처리 절차**를 기술한다. 유스케이스는 **애플리케이션에 특화된 업무 규칙을 표현하며 엔티티 내부의 핵심 업무 규칙을 호출하며 시스템을 사용하는 흐름**을 담는다. 이때 엔티티 같은 고수준은 저수준의 유스케이스를 알게 하면 안된다.
-  엔티티는 간단한 객체 여야 하며 프레임워크 데이터베이스 또는 여타 복잡한 것에 의존되어서는 안되고 유스케이스 객체을 통해서만 엔티티를 조작해야 한다.
-
-- 그리고 그 다음 유스케이스를 감싸고 있는 모든 영역들은 **세부사항** 이다. **세부사항은 입출력 장치, 저장소, 웹 시스템, 서버, 프레임워크, 통신 프로토콜이 될 수 있으며, 세부사항과 유스케이스 관계를 의존관계 역전의 법칙을 이용하여 플러그인처럼 유연하게 처리**해야 한다. 이런 명확한 결합의 분리는 테스트 성 및 개발 독립성, 배포 독립성 강화할 수 있다.
-
-![클린 아키텍처](https://engineering-skcc.github.io/assets/images/msa/MSA_3.8.png)
-
-
+### 
 
  
 
@@ -1675,305 +1596,6 @@ public class TotalRentalServiceImpl implements TotalRentalService {
 - application`은 주로 유스케이스(usecases)가 작성된 클래스를 포함한다. 이 계층엔 업무 로직이 거의 없고, `domain`의 여러 업무 로직을 조합하는 역할을 한다. 
 - interfaces`는 클라이언트와 약속한 통신 방식의 어댑터를 포함한다. 이곳에 포함되는 어댑터는 주어댑터이며, 주로 MVC의 컨트롤러나 RPC 서비스 등이다.`
 - infrastructure`는 기반 요소, 즉 다른 서비스를 사용하는 어댑터를 포함한다. 이곳에 포함되는 어댑터는 부어댑터이다. 예를 들면 Kafka나 Redis, MySQL 또는 다른 서비스의 API를 사용하는 구현체가 포함되는 패키지이다.
-- 일반적인 레이어드 구조의 패키지를 포트앤아답터 구조의 패키지로 변환하는 예이다.
-
-```markup
-└── com
-    └── layered
-        └── sally
-            ├── controller
-            │   ├── MembershipController.java
-            │   └── StoreController.java
-            ├── dto
-            │   ├── RegisterRequest.java
-            │   ├── RegisterResponse.java
-            │   ├── StoreRequest.java
-            │   ├── StoredItemDto.java
-            │   └── UserDto.java
-            ├── entity
-            │   ├── User.java
-            │   ├── Item.java
-            ├── persistence
-            │   ├── ItemRepository.java
-            │   └── UserRepository.java
-            └── service
-                ├── InventoryService.java
-                ├── MembershipService.java
-                ├── TotalRentalService.java
-                └── TotalRentalServiceImpl.java
-```
-
-- `controller`의 `MembershipController`와 `StoreController`는 서로 전혀 참조하지 않을 것 같지만 같은 패키지에 들어 있다. 
-- `persistence`의 `ItemRepository`와 `UserRepository`도 서로 참조하지 않는다. 
-- 패키지는 서로 연관이 있는 클래스를 한 데 모으고 응집도를 높이는 역할을 해야 한다. 
-- 패키지 조직만 잘해도 응집도가 높은 패키지 구조([참고](https://en.wikipedia.org/wiki/Package_principles))를 작성할 수 있다.
-- 이 패키지 구조를 포트와 어댑터 아키텍처를 따른 패키지 구조로 리팩터링한다면 다음과 같다.
-
-```markup
-└── com
-    └── linecorp
-        └── sally
-            ├── application
-            │   ├── impl
-            │   │   └── TotalRentalServiceImpl.java
-            │   ├── InventoryService.java
-            │   └── TotalRentalService.java
-            ├── domain
-            │   ├── item
-            │   │   ├── Item.java
-            │   │   └── ItemRepository.java
-            │   └── member
-            │       ├── MembershipService.java
-            │       ├── User.java
-            │       └── UserRepository.java
-            └── interfaces
-                ├── common
-                │   ├── StoredItemDto.java
-                │   └── UserDto.java
-                ├── member
-                │   ├── MembershipController.java
-                │   ├── RegisterRequest.java
-                │   └── RegisterResponse.java
-                └── store
-                    ├── StoreController.java
-                    └── StoreRequest.java
-```
-
-- `RegisterRequest`와 `RegisterResponse`는 아마도 `MembershipController`외에는 사용할 것 같지 않으므로 같은 패키지에 넣어둔다.
-- 이렇게 하면 `RegisterRequest`와 `RegisterResponse`의 접근 제어자를 패키지 수준으로 제한할 수 있다.
-- **접근 제어자를 제한해 놓으면 두 클래스는 다른 패키지에서 전혀 관심 가질 필요가 없다는 의도를 명확히 표현**할 수 있다.
-- 또 클래스가 격리되므로 불필요한 의존성을 막거나 불특정 다수에게 참조될 위험성을 미연에 방지할 수 있다.
-- 패키지 구조를 바꿈으로써 우리는 응집도를 높이고 모듈화라는 패키지 본연의 기능을 극대화할 수 있다.
-
-
-
-### 4.3.3 포트와 어댑터 아키텍처 적용 사례
-
-- 애플리케이션에 속하는 이 서비스는 `rent()` 메서드를 실행하기 위해 `RentalTarget` 객체를 요구하고 있다. 
-- 이는 인터페이스, 즉 이 메서드를 호출하는 클라이언트와의 약속이다. 
-
-```java
-public class TotalRentalServiceImpl implements TotalRentalService {
- 
-    // ...
- 
-    public RentalHistory rent(RentalTarget target) {
-        // ...
-        return history;
-    }
-}
-```
-
-- 종종 어댑터인 컨트롤러의 매개변수가 그대로 애플리케이션이나 도메인 쪽으로 넘어오는 사례가 있다. 컨트롤러가 아래와 같이 호출하는 경우이다.
-
-```java
-public class RentalController {
-     
-    private final TotalRentalService totalRentalService;
- 
-    // ...
-    public Response<RentalHistoryView> rent(@RequestBody RentParam param) {
-        // ...
-        totalRentalService.rent(param); // 애플리케이션이 어댑터를 알게 되는 상황
-        // ...
-    }
-}
-```
-
-- `totalRentalService.rent()`에 `param`을 넣는 것을 보니 `rent()`의 시그니처는 `RentalHistory rent(RentParam param)`이다. 
-- 클라이언트와 컨트롤러 사이의 인터페이스가 컨트롤러와 애플리케이션 간의 인터페이스로 사용되었다.
-- 이런 상황은 포트와 어댑터가 구분되어 있다고 할 수 없으며  클라이언트의 인터페이스가 애플리케이션까지 변경할 수 있으므로 결합도가 높은 상황이다.
--  여기에 RPC 서비스를 새로 붙여서 애플리케이션에 연동할 경우 아래와 같은 상황이 발생한다.
-  -  RPC 서비스는 주로 [IDL](https://ko.wikipedia.org/wiki/인터페이스_정의_언어)을 사용하고 [DTO](https://ko.wikipedia.org/wiki/데이터_전송_객체)를 별도로 생성한다. 
-  - 아마 `RentParam`을 사용하지 않을 테지만, 애플리케이션을 사용하기 위해 RPC 서비스에선 굳이 `RentParam`을 생성하여 매개변수로 사용해야 한다.
-  -  이때 HTTP 어댑터인 컨트롤러에서 요구 사항이 변경되어 `RentParam`을 변경해야 한다면, 애플리케이션뿐만 아니라 RPC 서비스까지 변경해야 한다.
-- 포트앤어댑터 아키텍처에선 어댑터가 애플리케이션을 일방적으로 알고 있기 때문에 어댑터가 애플리케이션에 맞춰야 한다. 
-- 아래는 `RentParam`을 `RentalTarget`으로 변경하여 메서드를 호출하는 예제이다.
-
-```java
-public class RentalController {
-     
-    private final TotalRentalService totalRentalService;
-    // ...
- 
-    public Response<RentalHistoryView> rent(@RequestBody RentParam param) {
-        // ...
-        totalRentalService.rent(param.toRentTarget());
-        // ...
-    }
-}
-```
-
-- 부포트와 어댑터 역시 크게 다르지 않다.
-
-```java
-public class TotalRentalServiceImpl implements TotalRentalService {
- 
-    private final CustomerRepository customerRepository;
-    private final RentalRepository rentalRepository;
-    private final InventoryService inventoryService;
-    private final RentalHistoryRepository rentalHistoryRepository;
- 
-    // ...
- 
-    public RentalHistory rent(RentalTarget target) {
-        //...
- 
-        Item rentedItem = inventoryService.rent(rental, borrower).orElseThrow(AlreadyRentedException::new);
-        // ...
-        return history;
-    }
-}
-```
-
-- `inventoryService`에 `HttpInventoryService`라는 어댑터를 주입했다고 가정할 경우 일반적으로 네트워크를 통해 하나의 서비스에서 다른 서비스를 호출하며 이때 주로 HTTP 인터페이스를 사용하게 된다. 
-- 그런데 처음 서비스를 연동할 때에는 API가 추가되거나 변경된다고만 생각할 뿐, 연동하는 서비스 자체가 바뀔 거라는 생각은 잘 하지 않기 때문에 연동한 서비스의 DTO를 바로 반환하는 방법이 일반적이다.
-
-```java
-public class HttpInventoryService implements InventoryService {
-    // ...
- 
-    @Override
-    public Optional<StoredItem> rent(Rental rental, Customer borrower) {
-        // ... HTTP 통신
-        // ... JSON 역직렬화
-        return Optional.of(storedItem);    
-    }
-}
-```
-
-- `HttpInventoryService`는 HTTP를 이용해 받아 온 JSON을 역직렬화하여 `StoredItem` 객체를 만든다. 
-- 예제와 같이 애플리케이션 계층에서 사용하는 `Item`이 아니라 외부 `InventoryService`에서 얻어 온 StoredItem을 반환하는 경우가 많으며InventoryService`를 고도화하여 향상된 `InventoryService`가 출시되었고, 모든 클라이언트에게 API를 변경해야 하는 상황이 발생 하게 된다.
-  - 만약 포트와 어댑터 아키텍처대로 설계했다면, 어댑터를 하나 더 생성하여 `HttpInventoryService`를 대체하면 되나 새로 생성한 어댑터에서는 더 이상 `StoredItem`을 사용할 수 없게 되었다.
-  - 향상된 `InventoryService`에서 제공하는 JSON의 구조가 아래와 같이 변경되었기 때문이다.
-  - 이렇게 되면 DTO를 변경해야 하고, 결국 애플리케이션 영역에 있는 `TotalRentalService`에도 영향을 준다. 
-
-```json
-// 기존 JSON
-{ "itemId": "ID", "itemStatus": "AVAILABLE", "rentalId": "RID", rentalName": "NAME" }
-// 향상된 JSON
-{ "item": { "id": "ID", "status": "AVAILABLE" }, "rental": { "id": "RID", "name": "NAME" } }
-```
-
-- 이를 방지하기 위해서는 **주어댑터와 마찬가지로 부어댑터가 부포트를 준수**하면 된다.
-
-```java
-public class HttpInventoryService implements InventoryService {
-    // ...
- 
-    @Override
-    public Optional<Item> rent(Rental rental, Customer borrower) {
-        // ... HTTP 통신
-        // ... JSON 역직렬화
-        return Optional.of(storedItem.toItem());
-    }
-}
-```
-
-- 포트와 어댑터 아키텍처를 따랐다면 향상된 `InventoryService`가 JSON 구조를 바꿨다고 해도 걱정할 필요 없으며. 담고 있는 요소가 변경되지 않는 이상, 새로운 어댑터를 추가하는 것만으로도 기반 요소 변경에 쉽게 대응할 수 있다. 
-
-- 새로 추가된 어댑터는 여전히 JSON을 역직렬화하여 `Item` 객체를 만들 수 있고, 데이터를 애플리케이션에 제공할 수 있다.
-
-  > **어플리케이션 개발 시 주고받는 데이터 형태에만 신경 써선 안된다. 예를들어 MyBatis를 쓰고 있다고 해서 Repository의 인터페이스를 `queryList()`와 같이 작성하면 이 인터페이스는 애플리케이션이 아니라 MyBatis에 의존하게 된다.** 
-
-  > **저장소를 Redis로 바꾸게 되면 `queryList()`는 어색한 인터페이스로 남으며 이 메서드를 `commandList()`로 바꿔야 할 것 같지만 그러기 위해선 애플리케이션이나 도메인 영역을 함께 변경해야하므로 인터페이스 자체를 어느 한쪽에 치우치게 설계하지 말고 도메인 관점에서 도메인이 필요로 하는 인터페이스를 설계해야 한다.**
-
-
-
-
-### 4.3.4 테스트
-
-- 포트와 어댑터 아키텍처로 만든 애플리케이션은 테스트하기가 매우 쉽다. 
-- **업무 로직을 포트가 감싸고 있기 때문에 모의 어댑터를 붙여 애플리케이션을 쉽게 구동해 볼 수 있어서 단순하게 테스트**할 수 있다.
-
-```java
-public class TotalRentalServiceImpl implements TotalRentalService {
- 
-    private final CustomerRepository customerRepository;
-    private final RentalRepository rentalRepository;
-    private final InventoryService inventoryService;
-    private final RentalHistoryRepository rentalHistoryRepository;
- 
-    public TotalRentalServiceImpl(CustomerRepository customerRepository,
-                                  RentalRepository rentalRepository,
-                                  InventoryService inventoryService,
-                                  RentalHistoryRepository rentalHistoryRepository) {
-        this.customerRepository = customerRepository;
-        this.rentalRepository = rentalRepository;
-        this.inventoryService = inventoryService;
-        this.rentalHistoryRepository = rentalHistoryRepository;
-    }
- 
-    @Override
-    public RentalHistory rent(RentalTarget target) {
-        Customer borrower = customerRepository.find(target.customerId())
-                                              .orElseThrow(() -> new NotFoundException(target.customerId()));
-        Rental rental = rentalRepository.find(target.rentalId())
-                                        .orElseThrow(() -> new NotFoundException(target.rentalId()));
-        Item rentedItem = inventoryService.rent(rental, borrower)
-                                          .orElseThrow(AlreadyRentedException::new);
-        RentalHistory history = RentalHistory.of(UUID.randomUUID().toString(),
-                                                 RentalSpec.of(borrower, rental),
-                                                 rentedItem);
-        rentalHistoryRepository.save(history);
-        return history;
-    }
-}
-```
-
-- 위 애플리케이션 서비스는 네 개의 포트를 이용하고 있다. 
-- 세 개의 Repository와 하나의 Service는 내부가 어떻게 구성되어 있는지 모른다고 가정하고 저장소로 MySQL을 사용할 수도 있고 Redis를 사용할 수도 있으며 Service는 RPC를 이용할 수도, HTTP를 이용할 수도 있다.
-- 포트앤아답터 아키텍처에서는 애플리케이션 서비스를 실행하는 데에는 아무런 문제가 발생하지 않는다.
-- 아래는 Seudo 코드로 테스트 코드를 작성한 것이다.
-
-```markup
-@Test
-fun `rent should return a history`() {
-    val customer = Customer("CUSTOMER_ID")
-    val rental = Rental("RENTAL_ID")
-    val item = Item()
-    var saved: RentalHistory
- 
-    // 모의 어댑터를 준비한다.
-    val customerRepository = CustomerRepository {
-        override fun find(id) = customer
-    }
-    val rentalRepository = RentalRepository {
-        override fun find(id) = rental
-    }
-    val inventoryService = InventoryService {
-        override fun rent(rental, customer) = item
-    }
-    val rentalHistoryRepository = RentalHistoryRepository {
-        override fun save(history) {
-            saved = history
-        }
-    }
- 
-    // 테스트할 객체를 준비하고
-    val service: TotalRentalService = TotalRentalServiceImpl(customerRepository, rentalRepository, inventoryService, rentalHistoryRepository)
- 
-    // 테스트할 대상을 실행한다.
-    val result = service.rent(RentalTarget("CUSTOMER_ID", "RENTAL_ID"))
- 
-    // 결과를 검증한다.
-    assertNotNull(result)
-    assertNotNull(saved)
-    assertSame(result, saved)
-    assertEquals(customer, result.borrower)
-    assertEquals(rental, result.rental)
-    assertEquals(item, result.rentedItem)
-}
-```
-
-- 단위 테스트는 Whitebox 테스트이므로 각각의 모의 어댑터를 실행했을 때 어떻게 동작하고 어떤 값을 반환하는지 예상할 수 있다. 
-- 그러므로 모의 어댑터에 기대하는 동작을 정의하고 실제 서비스를 실행한 다음, 기대했던 결과와 일치하는지 확인할 수 있다.
-
-- 그런데 이때 애플리케이션의 저장소로 MySQL을 사용했고 Repository가 MySQL에 강하게 결합하고 있다면 같은 코드를 테스트하기 위해선 개발 장비에 MySQL을 설치하고 애플리케이션이 동작할 수 있는 스키마로 테이블을 생성한 뒤 모의 데이터까지 삽입하고 나서야 테스트를 실행할 수 있다.
-
-- 모의 테스트 프레임워크를 사용하면 결합도 높은 클래스라도 쉽게 모의 객체를 만들어 주긴 하지만 클래스의 결합도가 높다면 단위 테스트를 할 때 'MySQL 쿼리에 오류가 있으면 어떡하지?'와 같은 고민을 하게 된다. 그런 일이 늘어나면 결국 단위 테스트는 통합 테스트가 되며  포트앤어댑터 아키텍처로 설계하면 이런 고민을 하지 않아도 된다.
-
-  > **업무 로직은 포트만 알면 된다.**
 
 
 
@@ -3963,11 +3585,11 @@ spring:
 
 
 
-# 5. Piot Application
+# 5. Demo Application
 
 ## 5.1  개요
 
-- 네이티브 아키텍처의 기술 스택을 이용한 Pilot Application을 구현하려고 한다. Pilot Application은 카탈로그 서비스, 사용자 서비스, 주문 서비스라는 3개의 마이크로서비스로 구성되어 있는 간단한 E-commerce 애플리케이션이다.
+- 네이티브 아키텍처의 기술 스택을 이용한 Demo Application을 구현하려고 한다. Demo Application은 카탈로그 서비스, 사용자 서비스, 주문 서비스라는 3개의 마이크로서비스로 구성되어 있는 간단한 E-commerce 애플리케이션이다.
 
 - 구현의 간단함을 위해 각 마이크로서비스는 RESTful API를 제공하는 비즈니스 로직만 구현하였다. 제공하는 비즈니스 로직은 다음과 같다.
 
@@ -3977,17 +3599,8 @@ spring:
 
   ◾  주문 서비스: 상품의 주문과 주문된 상품 확인
 
-- 다음은 Pilot Application의 서비스 흐름을 나타낸 그림이다.
 
- 
-
-![image-20220817110036458](./assets/image-20220817110036458.png)
-
-Pilot Application의 서비스 흐름
-
-
-
-- Piot Application은 아래의 Git을 통해 다운로드 받을수 있다.
+- Demo Application은 아래의 Git을 통해 다운로드 받을수 있다.
 
   ```shell
   git clone https://github.com/kirobo77/cloudnative.git
@@ -3999,7 +3612,7 @@ Pilot Application의 서비스 흐름
 
 ### 5.2.1  기술 스택
 
-- Piot Application은 Spirng Cloud 기반에서 동작하는 마이크로서비스이며 DDD 관점에 따라 3개의 마이크로 서비스로 구성되어 있다.
+- Demo Application은 Spirng Cloud 기반에서 동작하는 마이크로서비스이며 DDD 관점에 따라 3개의 마이크로 서비스로 구성되어 있다.
 
 - CloudNative에서는 컨테이너가 핵심요소이지만 해당 실습에서는 Spring Boot를 활용한 어플리케이션 개발에 중점을 두며 해당 영역은 별도로 다루지 않는다.
   - 컨테이너 환경에서는 Spring Cloud의 기술요소를 대체할 수 있는 여러 훌륭한 솔루션이 존재한다.
@@ -4113,8 +3726,6 @@ java -jar zipkin.jar
 
 - 다음으로 카탈로그 서비스로부터 등록된 상품의 목록을 가져오도록 하자.
 
-![image-20220823095529925](./assets/image-20220823095529925.png)
-
  
 
 ### 5.4.4 상품 주문
@@ -4132,15 +3743,7 @@ java -jar zipkin.jar
 }
 ```
 
- ![image-20220823095605044](./assets/image-20220823095605044.png)
-
-주문한 상품의 내용을 주문 서비스가 사용하고 있는 데이터베이스에서 확인해 보면 다음과 같다.
-
- ![image-20220823095613029](./assets/image-20220823095613029.png)
-
-[그림 5-16] 주문 서비스의 H2 데이터베이스 조회 화면
-
-
+ 
 
 ### 5.4.5 상품 주문 조회
 
@@ -4148,21 +3751,15 @@ java -jar zipkin.jar
 
 - 조금 전에 주문했던 내용은 상품 주문 조회 서비스를 통해 확인할 수 있다. 각 사용자 별로 주문한 내용을 확인해 볼 수 있다.
 
- ![image-20220823095640224](./assets/image-20220823095640224.png)
 
- 
-
- 
 
 ## 5.5  MicroService간 통신
 
-- Pilot Application은 상품 주문이 요청되었을 때, 주문 서비스로 사용자가 요청한 주문 정보를 전달하게 된다. 
+- Demo Application은 상품 주문이 요청되었을 때, 주문 서비스로 사용자가 요청한 주문 정보를 전달하게 된다. 
 - 그리고 사용자 서비스에서 사용자의 정보 확인 시, 해당 사용자가 주문한 상품의 목록을 확인할 수 있는데 여기에서 사용자 마이크로서비스로부터 주문 마이크로서비스로 주문 상품 목록을 요청하게 된다. 
-- 이 작업을 위해, Pilot Application에서는 Spring Cloud의 FeignClient를 이용하여 사용자 서비스에서 주문 서비스로 정보를 요청하고 있다. 
+- 이 작업을 위해, Demo Application에서는 Spring Cloud의 FeignClient를 이용하여 사용자 서비스에서 주문 서비스로 정보를 요청하고 있다. 
 
- <img src="./assets/image-20220823095858586.png" alt="image-20220823095858586" style="zoom:150%;" />
-
-
+ 
 
 ## 5.6  Messaging Service를 통한 데이터 동기화
 
@@ -4170,18 +3767,11 @@ java -jar zipkin.jar
 
 - Publisher는 어떤 Consumer가 메시지를 받는지 상관하지 않고 Kafka Messaging Service에게만 메시지를 전달하면되고, Consumer도 어떤 Publisher가 보냈는지 상관하지 않고 Kafka Messaging Service로부터 메시지를 받게 된다.
 
-![image-20220823095917308](./assets/image-20220823095917308.png)
-![image-20220823095934001](./assets/image-20220823095934001.png)
-
 - Consumer에서는 Kafka Messaging Service에 메시지가 전달되면 이벤트에 의해 메시지를 전달 받게 된다. 카탈로그 서비스에서 KafkaListener라는 어노테이션을 등록하여 Kafka Messaging Service로부터 메시지를 받겠다고 선언하면, Kafka의 토픽에 전달된 메시지가 있을 경우 바로 전달 받을 수 있게 된다.
-
-![image-20220823095943587](./assets/image-20220823095943587.png)
-![image-20220823095952822](./assets/image-20220823095952822.png)
 
 - 카탈로그 서비스에서는 Kafka Messaging Service로부터 전달 받은 주문 상품의 수량만큼 해당 상품의 수량을 업데이트 하게 된다.
 
 - 다시 한 번 카탈로그 서비스의 상품 목록을 확인해 보면 다음과 같이 수량이 변경된 것을 확인할 수 있다.
-  ![image-20220823100009787](./assets/image-20220823100009787.png)
 
 
 
@@ -4355,4 +3945,6 @@ public class MockBeanAnnotationIntegrationTest {
 ```shell
 mvn clean compile jib:dockerBuild
 ```
+
+
 
