@@ -3948,3 +3948,17 @@ mvn clean compile jib:dockerBuild
 
 
 
+
+
+[참고]
+
+- 클라우드네이티브 가이드라인(http://sw.tta.or.kr/notify/data_view.jsp?no=78)
+
+- 포트앤 아답터 아키텍처(https://engineering.linecorp.com/ko/blog/port-and-adapter-architecture/)
+
+- 헥사고날 아키텍처(https://engineering-skcc.github.io/microservice%20inner%20achitecture/inner-architecture-2/)
+
+  
+
+
+
