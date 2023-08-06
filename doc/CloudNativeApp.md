@@ -435,20 +435,20 @@ java -jar application.jar
 
 #### 1.4.5 결론
 
-| Factor           | 적용방법                                                     |
-| ---------------- | ------------------------------------------------------------ |
-| 코드베이스       | 모든 환경에 대해 하나의 코드베이스를 사용한다.               |
-| 종속성           | `pom.xml`또는 의 모든 종속성을 선언합니다 `build.gradle`.    |
-| 구성             | 환경 변수를 사용하여 구성을 외부화 한다.                     |
-| 지원 서비스      | JPA와 같은 추상화를 사용하여 플러그형 서비스를 구축한다.     |
-| 빌드/릴리스/실행 | Docker 이미지를 빌드하고 게시한다.                           |
-| 프로세스         | 상태 비저장 서비스를 구축하고 모든 상태 정보를 애플리케이션 외부(예: 데이터베이스) 외부에 저장한다. |
-| 포트 바인딩      | `server.port`환경 변수 로 포트를 구성 한다.                  |
-| 동시성           | 더 작은 상태 비저장 애플리케이션(마이크로서비스)을 구축한다. |
-| 일회용           | 컨테이너 이미지에 애플리케이션을 패키징한다.                 |
-| 개발/제품 패리티 | 컨테이너 이미지를 빌드하고 여러 환경에 제공한다.             |
-| 로그             | 중앙 로그 수집기에 로그를 게시한다.                          |
-| 관리 프로세스    | API 엔드포인트/실행인수로 일회성 프로세스를 구축한다.        |
+| Factor                 | 적용방법                                                     |
+| ---------------------- | ------------------------------------------------------------ |
+| Codebase               | 모든 환경에 대해 하나의 코드베이스를 사용한다.               |
+| Dependencies           | `pom.xml`또는 의 모든 종속성을 선언합니다 `build.gradle`.    |
+| Configurations         | 환경 변수를 사용하여 구성을 외부화 한다.                     |
+| Backing Services       | JPA와 같은 추상화를 사용하여 플러그형 서비스를 구축한다.     |
+| Build, Release and Run | Docker 이미지를 빌드하고 게시한다.                           |
+| Processes              | 상태 비저장 서비스를 구축하고 모든 상태 정보를 애플리케이션 외부(예: 데이터베이스) 외부에 저장한다. |
+| Port Binding           | `server.port`환경 변수 로 포트를 구성 한다.                  |
+| Concurrency            | 더 작은 상태 비저장 애플리케이션(마이크로서비스)을 구축한다. |
+| Disposability          | 컨테이너 이미지에 애플리케이션을 패키징한다.                 |
+| Dev/Prod Parity        | 컨테이너 이미지를 빌드하고 여러 환경에 제공한다.             |
+| Logs                   | 중앙 로그 수집기에 로그를 게시한다.                          |
+| Admin Processes        | API 엔드포인트/실행인수로 일회성 프로세스를 구축한다.        |
 
 
 
@@ -456,7 +456,7 @@ java -jar application.jar
 
 - 2016년에는 클라우드 플랫폼 회사 피보탈(Pivotal)의 엔지니어인 케빈 호프만(Kevin Hoffman)이 최신 트렌드에 맞는 사용자의 요구 사항을 반영하여 헤로쿠의 12 Factors 에 3가지의 요소를 추가하였다15). 새롭게 추가된 내용은 아래와 같다.
 
-  **13) API 우선(API First): API 설계를 우선하여, 코드를 작성하기 이전에 설계하고자 하는 서비스의 의도와 기능을 명확하게 할 수 있음. API 설계로 Web이나 모바일 뿐만 아니라 API를 이용하려는 다른 서비스간에도 커뮤니케이션 가능**
+  **2) API 우선(API First)**: API 설계를 우선하여, 코드를 작성하기 이전에 설계하고자 하는 서비스의 의도와 기능을 명확하게 할 수 있음. API 설계로 Web이나 모바일 뿐만 아니라 API를 이용하려는 다른 서비스간에도 커뮤니케이션 가능**
 
   **14) 관측(Telemetry): 애플리케이션 성능 모니터링, 애플리케이션이 처리하는 초당 HTTP 요청의 평균 개수 등과 같이 비즈니스에 의미 있는 예측 분석을 위해 이벤트 및 데이터 수집**
 
@@ -466,7 +466,7 @@ java -jar application.jar
 
   1) 코드 베이스(One Codebase, One Application)
 
-  2) API 우선(API First)
+  **2)  API 우선(API First)**
 
   3) 종속성(Dependency Management)
 
@@ -490,9 +490,9 @@ java -jar application.jar
 
   13) 동시성(Concurrency)
 
-  14) 관측(Telemetry)
+  **14) 관측(Telemetry)**
 
-  15) 인증과 권한(Authentication and Authorization)
+  **15) 인증과 권한(Authentication and Authorization)**
 
  
 
@@ -1451,152 +1451,6 @@ public class MyConfiguration {
 
 
 
-## 4.3 Spring Boot를 활용한 아키텍처 구성
-
-### 4.3.1 포트와 어댑터 
-
-- **포트는 바로 인터페이스**이다. 예를 들면 클래스의 메서드 시그니처나 Java의 인터페이스가 바로 포트라고 할 수 있다. 
-- **어댑터는 클라이언트에 제공해야 할 인터페이스를 따르면서도 내부 구현은 서버의 인터페이스로 위임**하는 것이다.
-- 아래 코드는 책이나 DVD 같은 대여물의 대여와 반납을 관리하는 애플리케이션의 이다.
-
-```java
-@Service
-public class TotalRentalServiceImpl implements TotalRentalService {
- 
-    private final CustomerRepository customerRepository;
-    private final RentalRepository rentalRepository;
-    private final InventoryService inventoryService;
-    private final RentalHistoryRepository rentalHistoryRepository;
- 
-    @Autowired
-    public TotalRentalServiceImpl(CustomerRepository customerRepository,
-                                  RentalRepository rentalRepository,
-                                  InventoryService inventoryService,
-                                  RentalHistoryRepository rentalHistoryRepository) {
-        this.customerRepository = customerRepository;
-        this.rentalRepository = rentalRepository;
-        this.inventoryService = inventoryService;
-        this.rentalHistoryRepository = rentalHistoryRepository;
-    }
- 
-    @Override
-    public RentalHistory rent(RentalTarget target) {
-        Customer borrower = customerRepository.find(target.customerId())
-                                              .orElseThrow(() -> new NotFoundException(target.customerId()));
-        Rental rental = rentalRepository.find(target.rentalId())
-                                        .orElseThrow(() -> new NotFoundException(target.rentalId()));
-        Item rentedItem = inventoryService.rent(rental, borrower)
-                                          .orElseThrow(AlreadyRentedException::new);
-        RentalHistory history = RentalHistory.of(UUID.randomUUID().toString(),
-                                                 RentalSpec.of(borrower, rental),
-                                                 rentedItem);
-        rentalHistoryRepository.save(history);
-        return history;
-    }
-}
-```
-
-- 이 서비스는 `TotalRentalService`를 구현하여 `RentalHistory rent(RentalTarget)`라는 인터페이스를 제공하고 있다.
--  만약 MVC 패턴을 채택했다면 이 서비스의 `rent()`를 사용하는 것은 컨트롤러이다. 
-- 컨트롤러는 다시 HTTP를 통한 인터페이스를 클라이언트에게 제공하여 클라이언트가 `TotalRentalService`를 이용할 수 있도록 중간 역할을 한다. 이를 그림으로 나타내면 다음과 같다.
-
-![img](./assets/1657785410947.png)클라이언트와 애플리케이션의 통신 간 컨트롤러의 위치와 역할
-
-- 이때 `TotalRentalService`는 인터페이스를 제공하므로 포트이며, 위 코드에선 `rent()`가 포트가 된다. 컨트롤러는 클라이언트의 HTTP API 요청을 받아 `rent()`라는 인터페이스를 연결해주고 있으므로 어댑터이다. 
-- 이렇게 **외부에서 요청해야 동작하는 포트와 어댑터를 주요소(primary)라고 하며, 포트와 어댑터에 따라 주포트 혹은 주어댑터**라고도 부른다.
-
-- `TotalRentalService`의 구현체는 내부적으로 `CustomerRepository`나 `RentalRepository`, `InventoryService` 인터페이스를 사용한다. 만약 `Repository`가 데이터의 영속을 위해 Redis를 사용한다면 아래 그림과 같이 표현할 수 있다.
-
-![img](./assets/1657785452997.png)그림] 애플리케이션과 기반 요소의 통신 간 Repository의 위치와 역할
-
-- `Repository`나 `Service`는 `TotalRentalService`가 사용할 인터페이스를 제공하고 있기 때문에 포트이다. 위 코드의 `rentalRepository.find()`나 `inventoryService.rent()`를 예로 들 수 있다.
-- Repository가 Redis와 프로토콜을 이용해 통신하고 있다면 `RedisRepository`와 같은 구현체가 있으며 이 구현체는 Repository라는 인터페이스를 따르면서 내부적으로 Redis 프로토콜과 연결해 주므로 어댑터이다.
-- **애플리케이션이 호출하면 동작하는 포트와 어댑터를 부요소(secondary)라고 한다. 역시 부포트 또는 부어댑터**라고 부를 수 있다.
-
-- 아래는 포트와 어댑터 아키텍처를 따른 소프트웨어와 인터페이스, 기반 요소와의 관계를 표현한 그림이다. 
-
-![img](./assets/1657785510912.png)포트와 어댑터의 추상적인 개념
-
-- 앞서 설명드렸던 요소들이 모두 담겨 있는 위 그림을 통해 서로 간의 의존 관계를 파악할 수 있다. 
-- 포트
-  - 어댑터가 애플리케이션과는 겹치지 않고 포트와 겹쳐 있는 모습으로 미루어 보아 **어댑터가 애플리케이션을 직접 참조하지 않고 포트에 의존**하고 있다는 것을 알 수 있으며 포트는 변경이 잦은 어댑터와 애플리케이션의 결합도를 낮추는 역할을 한다. 
-  - **애플리케이션은 핵심 로직에 가까우므로 결합도를 낮추는 것**이 매우 중요하다. 
-  - 또한 애플리케이션은 도메인에 의존하지만 도메인은 애플리케이션과 어댑터에 전혀 의존하지 않는다. 따라서 애플리케이션이나 어댑터가 변경되어도 핵심 로직인 도메인은 아무런 영향을 받지 않는다.
-- 어댑터
-  - 주요소 쪽의 HTTP와 RPC는 각각의 어댑터를 통해 애플리케이션을 이용한다. 
-  - 그러나 각각의 **어댑터는 결국 하나의 포트**를 사용한다. 
-  - 만약 웹소켓이 필요하다면 웹소켓 어댑터를 새로 만들어서 추가하면 된다. 
-  - 새로운 **어댑터를 추가하는 동안 포트가 애플리케이션과 도메인을 보호**하며 부요소 쪽에는 애플리케이션이 이용하는 기반 요소들이 있다. 
-  - 위 그림에서는 저장소로 MySQL을 사용하고 있는 것을 확인할 수 있다.
-  - 앞서 주요소 쪽에서 본 것과 다르게 기반 요소의 포트와 어댑터는 일반적으로 1:1 관계이며 이것은 하나의 포트에 여러 어댑터가 있다거나 새로 추가될 일은 거의 없다는 의미이다. 
-- 기존에 사용하던 어댑터가 교체될 가능성은 충분이 있으며 빠른 속도가 필요하다면 MySQL을 Redis로 교체할 필요성이 있을 경우 Redis의 어댑터를 포트의 인터페이스에 준해서 만들고, 교체하면 된다. 이때도 역시 포트가 애플리케이션과 도메인을 보호한다.
-- **Spring**
-  -  Spring Data JPA를 쓸 때 보통 인터페이스는 만들지만 구현체는 만들지 않는다. 
-  - Spring Data JPA가 구현체 즉 어댑터를 만들어 준다.
-  - 만약 Spring Data Redis를 도입하더라도 먼저 만들어 둔 Repository들은 인터페이스, 즉 포트이므로 수정사항이 없다.
-  - Spring Data Redis가 Redis와 통신하는 어댑터를 만들어준다. 
-
-
-
-### 4.3.2 포트와 어댑터 아키텍처 구성
-
-- 애플리케이션의 코드를 구조화 하기 위해 패키지나 네임스페이스 등을 활용하며 포트와 어뎁터 아키턱처를 위한 패키지 구조는 다음과 같다.
-
-```java
-public class TotalRentalServiceImpl implements TotalRentalService {
- 
-    private final CustomerRepository customerRepository;
-    private final RentalRepository rentalRepository;
-    private final InventoryService inventoryService;
-    private final RentalHistoryRepository rentalHistoryRepository;
- 
-    // ...
- 
-    public RentalHistory rent(RentalTarget target) {
-        // ...
-        return history;
-    }
-}
-```
-
-
-
-```markup
-└── com
-    └── portandadpater
-        └── rentalapp
-            ├── application
-            │   ├── AlreadyRentedException.java
-            │   ├── NotFoundException.java
-            │   ├── RentalTarget.java
-            │   ├── TotalRentalService.java
-            │   └── TotalRentalServiceImpl.java
-            ├── domain
-            │   ├── model
-            │   │   ├── customer
-            │   │   │   ├── Customer.java
-            │   │   │   └── CustomerRepository.java
-            │   │   ├── history
-            │   │   │   ├── RentalHistory.java
-            │   │   │   └── RentalHistoryRepository.java
-            │   │   └── rental
-            │   │       ├── Item.java
-            │   │       ├── Rental.java
-            │   │       └── RentalRepository.java
-            │   └── service
-            │       └── rental
-            │           └── InventoryService.java
-            │
-            ├── infrastructure
-            └── interfaces
-```
-
-- 이 구조는 **포트와 어댑터 아키텍처에 반드시 필수 형태는 아니며 아키텍처 원칙에 맞다면 프로젝트 성격에 따라 달라질 수 있다.**
--  위 패키지 구조에서 `domain`엔 주로 업무 로직을 포함하는 클래스들이 들어선다. 
-- application`은 주로 유스케이스(usecases)가 작성된 클래스를 포함한다. 이 계층엔 업무 로직이 거의 없고, `domain`의 여러 업무 로직을 조합하는 역할을 한다. 
-- interfaces`는 클라이언트와 약속한 통신 방식의 어댑터를 포함한다. 이곳에 포함되는 어댑터는 주어댑터이며, 주로 MVC의 컨트롤러나 RPC 서비스 등이다.`
-- infrastructure`는 기반 요소, 즉 다른 서비스를 사용하는 어댑터를 포함한다. 이곳에 포함되는 어댑터는 부어댑터이다. 예를 들면 Kafka나 Redis, MySQL 또는 다른 서비스의 API를 사용하는 구현체가 포함되는 패키지이다.
-
 
 
 ## 4.4 Spring Cloud란?
@@ -1637,6 +1491,7 @@ Spring Cloud는 일반적인 사용 사례에 대한 우수한 즉시 사용 가
 
 | Release Train                                                | Boot Version                          |
 | :----------------------------------------------------------- | :------------------------------------ |
+| [2022.0.x](https://github.com/spring-cloud/spring-cloud-release/wiki/Spring-Cloud-2022.0-Release-Notes) aka Kilburn | 3.0.x, 3.1.x (Starting with 2022.0.3) |
 | [2021.0.x](https://github.com/spring-cloud/spring-cloud-release/wiki/Spring-Cloud-2021.0-Release-Notes) aka Jubilee | 2.6.x, 2.7.x (Starting with 2021.0.3) |
 | [2020.0.x](https://github.com/spring-cloud/spring-cloud-release/wiki/Spring-Cloud-2020.0-Release-Notes) aka Ilford | 2.4.x, 2.5.x (Starting with 2020.0.3) |
 | [Hoxton](https://github.com/spring-cloud/spring-cloud-release/wiki/Spring-Cloud-Hoxton-Release-Notes) | 2.2.x, 2.3.x (Starting with SR5)      |
@@ -1665,7 +1520,7 @@ Spring Cloud는 일반적인 사용 사례에 대한 우수한 즉시 사용 가
   </dependencyManagement>
   ```
 
-  - spring-cloud-dependencies 는 취약점 보완 때문에 **2021.0.1** 으로 해야 한다.
+  - spring-cloud-dependencies 는 취약점 보완 때문에 **2021.0.1** 이상 으로 해야 한다.
 
   - spring cloud 를 사용하기 위해서는 spring-cloud-dependencies dependencyManagement 를 추가해 주어야 한다.
 
@@ -2834,10 +2689,33 @@ feign:
 ```java
 @Bean
 public BasicAuthRequestInterceptor basicAuthRequestInterceptor() {
-    return new BasicAuthRequestInterceptor("username", "password");
+    return new BasicAuthRequestInt
+        
+        erceptor("username", "password");
+}
+```
+- RequestInterceptor 인터페이스를 통해 Custom 한 구현체를 사용할 수 있다.
+```java
+@Configuration
+public class ClientConfiguration {
+
+	@Bean
+    public RequestInterceptor requestInterceptor() {
+        return new CustomRequestInterceptor();
+    }
 }
 ```
 
+- RequestTemplate 를 통해  Http Header 및 RequestBody 데이타를 변경할 수 있다.
+
+	public class CustomRequestInterceptor implements RequestInterceptor {
+	
+		@Override
+		public void apply(RequestTemplate template) {
+			// TODO Auto-generated method stub
+	
+		}
+	}
 
 
 ### 4.6.8 Circuit Breaker 지원
@@ -2925,14 +2803,19 @@ public class CustomErrorDecoder implements ErrorDecoder {
     @Override
     public Exception decode(String methodKey, Response response) {
 
-        switch (response.status()){
-            case 400:
-                return new BadRequestException();
-            case 404:
-                return new NotFoundException();
-            default:
-                return new Exception("Generic error");
-        }
+		switch (response.status()) {
+		case 400:
+			break;
+		case 404:
+			if (methodKey.contains("getOrders")) {
+				return new ResponseStatusException(HttpStatus.valueOf(response.status()),
+						"order_service.exception.order_is_empty");
+			}
+			break;
+		default:
+			return new Exception(response.reason());
+		}
+		return null;
     }
 }
 ```
@@ -3708,7 +3591,7 @@ java -jar zipkin.jar
 
 ### 5.5.2 사용자 조회
 
-> http://localhost/users-ms/users/a3af7fbc-b06c-4edb-95e9-b0efa0abc94b/
+> http://localhost/user-ms/users/a3af7fbc-b06c-4edb-95e9-b0efa0abc94b/
 >
 
 - 사용자 정보가 성공적으로 등록 되었다면, Response Body에서 “userId”를 확인할 수 있다. 반환된 “userId” 값을 이용하여 등록된 사용자의 정보를 확인해 보도록 하자. 
@@ -3721,7 +3604,7 @@ java -jar zipkin.jar
 
 ### 5.4.3 상품 목록 조회
 
-> http://localhost/catalogs-ms/catalogs
+> http://localhost/catalog-ms/catalogs
 >
 
 - 다음으로 카탈로그 서비스로부터 등록된 상품의 목록을 가져오도록 하자.
@@ -3730,7 +3613,7 @@ java -jar zipkin.jar
 
 ### 5.4.4 상품 주문
 
-> http://localhost/orders-ms/users/a3af7fbc-b06c-4edb-95e9- b0efa0abc94b/orders
+> http://localhost/order-ms/users/a3af7fbc-b06c-4edb-95e9- b0efa0abc94b/orders
 >
 
 - 상품 조회를 통해 “productId(상품 코드)”, “unitPrice(상품 단가)”와 “qty(수량)”을 확인 한 다음, 주문하고자 하는 상품의 정보를 전달하여 상품 주문 요청을 하도록 하자.
@@ -3747,7 +3630,7 @@ java -jar zipkin.jar
 
 ### 5.4.5 상품 주문 조회
 
-> http://localhost/orders-ms/users/a3af7fbc-b06c-4edb-95e9- b0efa0abc94b/orders
+> http://localhost/order-ms/users/a3af7fbc-b06c-4edb-95e9- b0efa0abc94b/orders
 
 - 조금 전에 주문했던 내용은 상품 주문 조회 서비스를 통해 확인할 수 있다. 각 사용자 별로 주문한 내용을 확인해 볼 수 있다.
 

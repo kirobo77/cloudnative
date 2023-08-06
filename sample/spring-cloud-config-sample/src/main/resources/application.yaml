@@ -7,7 +7,6 @@ spring:
     config:
       server:
         git:
-          #uri: http://git.cz-dev.container.kt.co.kr/82022949/config.git
           uri: https://github.com/kirobo77/config.git
           default-label: main
           skipSslValidation: true          
