@@ -1,6 +1,7 @@
 package com.example.cloudnative.ordersws.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+
 import lombok.Data;
 
 @Data

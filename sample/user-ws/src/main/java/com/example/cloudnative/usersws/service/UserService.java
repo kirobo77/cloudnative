@@ -3,8 +3,6 @@ package com.example.cloudnative.usersws.service;
 import com.example.cloudnative.usersws.dto.UserDto;
 import com.example.cloudnative.usersws.entity.UserEntity;
 
-import java.util.List;
-
 public interface UserService {
     UserDto createUser(UserDto userDetails);
     UserDto getUserDetailsByEmail(String email);

@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.MapReactiveUserDetailsServi
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+
 import com.example.demogateway.filter.LoggingGatewayFilterFactory;
 
 @Configuration

@@ -1,10 +1,11 @@
 package com.example.cloudnative.usersws.dto;
 
-import com.example.cloudnative.usersws.model.OrderResponseModel;
-import lombok.Data;
-
 import java.io.Serializable;
 import java.util.List;
+
+import com.example.cloudnative.usersws.model.OrderResponseModel;
+
+import lombok.Data;
 
 @Data
 public class UserDto implements Serializable {

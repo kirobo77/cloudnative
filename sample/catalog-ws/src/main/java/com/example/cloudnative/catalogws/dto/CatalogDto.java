@@ -1,8 +1,8 @@
 package com.example.cloudnative.catalogws.dto;
 
-import lombok.Data;
-
 import java.io.Serializable;
+
+import lombok.Data;
 
 @Data
 public class CatalogDto implements Serializable {
