@@ -46,21 +46,6 @@
 - Podman은 **daemon 없이** 커맨드로 컨테이너 레지스트리로부터 이미지를 받아와 Podman 호스트의 로컬 이미지 저장소에 이미지를 저장하고, 해당 이미지를 이용하여 컨테이너를 실행하는 방식이다.
 - 이때 podman 라이브러리를 통해 바로 컨테이너를 실행하기 때문에 **컨테이너 간에 서로 영향을 주지 않으며, 컨테이너와 이미지 사이, 커맨드 명령어로 컨테이너를 제어하거나 이미지를 관리할 때도 서로 영향을 주지 않는다**.
 
-
-
-## 1.2  MSA(MicroService Architecture)
-
-### 1.2.1  개요
-
-- 대부분의 기업용 애플리케이션은 하나의 통합된 서비스 형태로 개발되어 왔다. **모놀리식(Monolithic) 아키텍쳐라고 불리는 이러한 단순한 애플리케이션의 구조 는 개발과 관리가 용이**하다는 장점이 있다.
-- 애플리케이션의 종류가 다양해지고 여러 가지 기능을 제공하는 대규모 시스템이 생겨나면서 규모가 커질 경우 **복잡도가 증가해 코드의 분석과 통합이 어려워지고 작은 수정사항에도 전체를 빌드 배포해야하는 비효율이 발생하는 등의 개선과 확장이 어렵다는 단점**이 발생하게 되었다.
-- **확장성에 초점을 맞추어 탄생한 아키텍쳐링 방법이 MSA**(MicroService Architecture)이다. 
-  - MSA는 대용량 웹서비스가 많아짐에 따라 탄생한 아키텍쳐 인데 그 근간은 SOA(Service Oriented Architecture)에 두고 있다. SOA가 엔터 프라이즈 시스템을 중심으로 고안된 아키텍쳐라면, MSA는 SOA 사상에 근간을 두고, 대용량 웹서비스 개발에 맞는 구조로 사상이 경량화되고 대규모 개발팀의 조직 구조에 맞도록 변형된 아키텍쳐이다.
-- **MSA는 경량화되고 독립적인 여러 개의 서비스를 조합하여 애플리케이션을 구현하는 방식으로 서비스마다 자체 데이터베이스를 가지고 동작할 수 있기 때문에 개발부터 빌드 배포까지 효율적으로 수행**할 수 있으며 **독립적인 서비스의 형태로 존재하기 때문에 이식성 측면에서 높은 효과**를 보인다.
-- 각각의 서비스들은 독립적인 서비스로 볼 수 있으며 서로 호환성이 높도록 구현되어 있기 때문에 각각의 서비스 구현 과정에서 **공통된 데이터 포맷이나 표준 기반의 API를 동일하게 사용한다면 타 클라우드 서비스와도 높은 상호운용성 수준을 확보**할 수 있다.
-
-> **MSA 구성은 기존 모놀로식 구조와 비교해서 결코 심플하지 않다. 하나의 서비스를 잘게 쪼갬으로써, 서비스 간 복잡도가 증가 될 수 있으며, 라우터, Circuit breaker, 각 서비스들의 관리 등 고려해야 할 것들이 기존보다 더 많아질 수도 있다. 그럼에도 불구하고 서비스들을 나누고 권한을 위임하면서, 고가용성, 유연한 스케일링, 빠르고 쉬운 배포 등의 큰 장점들이 있기 때문에 협업 부서가 많거나 규모가 좀 있는 시스템이라면 충분히 고려해 볼 만한 가치가 있다.**
-
  
 
 ## 1.3  오픈소스 생태계
@@ -87,16 +72,6 @@ CNCF Cloud Native Landscape
   - 최근에는 주요 클라우드 벤더는 **관리형 쿠버네티스 서비스(Amazon Kubernetes Service, Google Kubernetes Engine, Azure Kubernetes Service, NCP(Naver Cloud Platform) - Kubernetes Services 등)를 제공**하고 있으므로 쿠버네티스 기반으로 구성된 애플리케이션의 경우에는 쿠버네티스 환경만 지원한다면 높은 이식성을 확보할 수 있다.
 
  
-
-##  1.3. 클라우드 네이티브 애플리케이션 체크리스트
-
-> 행안부 공공클라우드 발주자 가이드 중
-
-![image-20220830094307915](./assets/image-20220830094307915.png)
-
-
-
-
 
 ## 1.4 클라우드 네이티브 애플리케이션 기술
 
@@ -496,15 +471,28 @@ java -jar application.jar
 
  
 
-## 1.5 모놀리스와 클라우드 네이티브 애플리케이션의 차이점
+
+
+## 1.5 MSA(MicroService Architecture)
+
+### 1.5.1  개요
+
+- 대부분의 기업용 애플리케이션은 하나의 통합된 서비스 형태로 개발되어 왔다. **모놀리식(Monolithic) 아키텍쳐라고 불리는 이러한 단순한 애플리케이션의 구조 는 개발과 관리가 용이**하다는 장점이 있다.
+- 애플리케이션의 종류가 다양해지고 여러 가지 기능을 제공하는 대규모 시스템이 생겨나면서 규모가 커질 경우 **복잡도가 증가해 코드의 분석과 통합이 어려워지고 작은 수정사항에도 전체를 빌드 배포해야하는 비효율이 발생하는 등의 개선과 확장이 어렵다는 단점**이 발생하게 되었다.
+- **확장성에 초점을 맞추어 탄생한 아키텍쳐링 방법이 MSA**(MicroService Architecture)이다. 
+  - MSA는 대용량 웹서비스가 많아짐에 따라 탄생한 아키텍쳐 인데 그 근간은 SOA(Service Oriented Architecture)에 두고 있다. SOA가 엔터 프라이즈 시스템을 중심으로 고안된 아키텍쳐라면, MSA는 SOA 사상에 근간을 두고, 대용량 웹서비스 개발에 맞는 구조로 사상이 경량화되고 대규모 개발팀의 조직 구조에 맞도록 변형된 아키텍쳐이다.
+- **MSA는 경량화되고 독립적인 여러 개의 서비스를 조합하여 애플리케이션을 구현하는 방식으로 서비스마다 자체 데이터베이스를 가지고 동작할 수 있기 때문에 개발부터 빌드 배포까지 효율적으로 수행**할 수 있으며 **독립적인 서비스의 형태로 존재하기 때문에 이식성 측면에서 높은 효과**를 보인다.
+- 각각의 서비스들은 독립적인 서비스로 볼 수 있으며 서로 호환성이 높도록 구현되어 있기 때문에 각각의 서비스 구현 과정에서 **공통된 데이터 포맷이나 표준 기반의 API를 동일하게 사용한다면 타 클라우드 서비스와도 높은 상호운용성 수준을 확보**할 수 있다.
+
+> **MSA 구성은 기존 모놀로식 구조와 비교해서 결코 심플하지 않다. 하나의 서비스를 잘게 쪼갬으로써, 서비스 간 복잡도가 증가 될 수 있으며, 라우터, Circuit breaker, 각 서비스들의 관리 등 고려해야 할 것들이 기존보다 더 많아질 수도 있다. 그럼에도 불구하고 서비스들을 나누고 권한을 위임하면서, 고가용성, 유연한 스케일링, 빠르고 쉬운 배포 등의 큰 장점들이 있기 때문에 협업 부서가 많거나 규모가 좀 있는 시스템이라면 충분히 고려해 볼 만한 가치가 있다.**
+
+### 1.5. 2  모놀리스와 클라우드 네이티브 애플리케이션의 차이점
 
  <img src="./assets/image-20220810135438142.png" alt="image-20220810135438142" style="zoom:150%;" />
 
 모놀리스와 마이크로서비스 아키텍처의 차이
 
-  
-
-### 1.5.1  모놀리스 아키텍처
+### 1.5.3 모놀리스 아키텍처
 
 - 모놀리스 아키텍처에 의해 개발되는 애플리케이션의 대부분은 장기간에 걸쳐 순차적 으로 진행되는 폭포수(waterfall) 개발 방식으로 구축된다. 애플리케이션 자체가 하나의 구성으로 이뤄져 있는 경우가 대부분이며 일반적으로 다음과 같이 3개의 주요 부분으로 구성되었다. 
 
@@ -526,9 +514,7 @@ java -jar application.jar
 
 - 모놀리스 애플리케이션의 인프라는 애플리케이션에 필요한 최대 용량을 예측하여 사전에 사용할 수 있는 리소스가 미리 결정되어 준비되기 때문에, 애플리케이션이 운영되고 있는 시스템의 성능을 높이기 위한 스케일링(Scaling) 작업에서도, 필요한 부분만큼의 자원을 늘리는 것이 아니라, **수직적 확장(Scale up)을 통해 서버의 하드웨어 용량을 높이는 확장**이 이루어져야 하는 단점을 가지고 있었다.
 
- 
-
-### 1.5.2  마이크로서비스 아키텍처
+### 1.5.4  마이크로서비스 아키텍처
 
 - 마이크로서비스 아키텍처는 소프트웨어 애플리케이션을 독립적으로 배치 가능하도록 서비스를 조합하고 설계하는 개발 방법을 말한다. 마이크로서비스의 창시자인 제임스 루이스(James Lewis)와 마틴 파울러(Martin Fowler)는 마이크로 서비스에 대해 다음과 같이 정의하였다.
 
@@ -668,9 +654,7 @@ https://landscape.cncf.io/
 
 <img src="./assets/image-20220810140046458.png" alt="image-20220810140046458" style="zoom:150%;" />
 
-
-
-Cloud Native Landscape
+**Cloud Native Landscape**
 
  
 
@@ -866,11 +850,11 @@ Cloud Native TrailMap
 
 
 
-## 2.3 애플리케이션 아키텍처
+## 3.2 애플리케이션 아키텍처
 
 - 기존 모노리스 환경에서 많이 적용하는 레이어드 아키텍처(Layered Architecture )에 대해 설명하고 최근의 마이크로서비스 설계자들이 마이크로서비스 내부구조를 유연하게 가져가기 위해 적용하고 있는 헥사고널 아키텍처(Hexagonal Architecture )와 클린 아키텍처(Clean Architecture)가 있다
 
-### 2.3.1 헥사고날 아키텍처
+### 3.2.1 헥사고날 아키텍처
 
 - 레이어드 아키텍처에 DIP를 적용해도 한계가 존재한다. 프레젠테이션 계층 와 데이터 액세스 계층을 보통 저수준 계층으로 정의한다고 했는데 **현대 어플리케이션의 활용은 이러한 2가지 계층 말고도 다양한 인터페이스를 필요**로 한다. 즉 어플리케이션을 호출하는 시스템의 유형과 어플리케이션과 상호작용하는 다양한 저장소가 존재한다. **헥사고날 아키텍처(육각형, Hexagonal Architecture)** 는 이러한 문제점을 해결할 수 있다.
 
@@ -885,10 +869,6 @@ Cloud Native TrailMap
 - 외부영역에 존재하는 **어댑터** 의 종류를 살펴보면 **인 바운드 어댑터는 REST API를 발행하는 컨트롤러, 웹 페이지를 구성하는 스프링 MVC 컨트롤러, 커맨드 핸들러, 이벤트 메시지 구독 핸들러** 등이 될 수 있고, **아웃바운드 어댑터는 데이터 액세스 처리를 담당하는 DAO , 이벤트 메시지를 발행하는 클래스, 외부 서비스를 호출하는 프록시** 등이 될 수 있다.
 
 ![헥사고날 아키텍처의 포트 와 어답터](https://engineering-skcc.github.io/assets/images/msa/MSA_3.7.png)
-
-### 
-
- 
 
 # 4. Spring 
 
@@ -978,7 +958,7 @@ Cloud Native TrailMap
 
 
 
-### 4.2.4 PSA(Portable Service Abstraction)란?
+### 4.2.4 Spring Triangle
 
 - **Spring은 Spring Triangle이라고 부르는 핵심 3대요소를 제공해준다. 이는 각각 IoC , AOP , PSA를 일컫는다.**
 
@@ -986,18 +966,246 @@ Cloud Native TrailMap
 
 
 
+#### 4.2.4.1  제어 역전 (IoC, Inversion of Control)
+
+- 객체 지향 프로그래밍인 자바에서의 클래스는 일반적인 경우 클래스 내에서 필요로 하는 의존성을 스스로 만들어 사용했다.
+
+```
+class OwnerController {
+	private OwnerRepository repo = new OwnerRepository();
+}
+```
+
+- 위의 예시에서 스스로 등록했다는 것은 OwnerController 클래스의 멤버 변수(객체)인 repo 변수에 할당될 객체를 new OwnerRepository(); 라는 구문을 통해 직접 생성했다는 것을 뜻한다.
+
+```
+class OwnerController {
+	//오너 레포지스트리를 사용하긴 하지만 직접 만들지는 않는다.
+	private OwnerRepository repo;
+	//생성자를 통해서 받아온다 -> 즉, 오너 컨트롤러가 하는 일이 아님.
+	public OwnerController(OwnerRepository repo){
+		this.repo = repo;
+	}
+}
+
+class OwnerControllerTest {
+	@Test
+	public void create() {
+		OwnerRepository repo = new OwnerRepository();
+		OwnerController controller = new OwnerController(repo);
+	}
+}
+```
+
+- 위 코드의 주석에서 설명했듯, 초기 코드에서는 OwnerController가 자신이 필요한 의존성인 OwnerRepository를 직접 생성했지만 위의 코드는 생성자로부터 OwnerRepository를 외부로부터 전달받아 멤버 변수(객체)로 주입되는 것을 알 수 있다.
+- 그런데 이것을 제어 역전이라고 하는 이유와 장점에는 어떤 것이 있는것인가?
+- 우리가 new OwnerRepository(); 를 통해 인스턴스를 직접 생성했다고 가정해보자.
+- 그런데 만약 인스턴스의 생성비용이 다소 크다거나 (일일이 이렇게 생성 및 주입을 해야하나?), Repository 의 변경이 있을 경우 우리는 해당 멤버객체에 주입되는 구현체를 변경해주어야 한다.
+- 하지만 관리 주체가 외부에 있는 경우, OwnerController 를 주입받는 외부에서 생성자로 전달되는 객체를 통해 실제 주입(사용)될 객체를 결정할 수 있고, 해당 클래스에 주입되는 구현체의 제어권은 외부로부터 결정된다고 할 수 있다.
+- 이것을 Spring 에서는 제어의 역전이라고 표현한다.
+
+Bean 등록 방법
+
+- 빈(Bean)은 스프링의 IoC 컨테이너가 관리하는 객체를 뜻한다. IoC 컨테이너에 Bean 으로 등록된 객체는 BeanFactory 를 상속(확장)받은 ApplicationContext 객체를 통해 다양한 패턴으로 어플리케이션 전역에 주입 또는 사용될 수 있다.
+- Bean 을 등록하는 방법에는 2가지가 있다.
+- 첫번째는 어노테이션을 활용해 컴포넌트 스캔을 이용하는 것.
+- 두번째는 자바의 설정파일을 활용해 직접 등록하는 방법이 있다.
+- 아래는 컴포넌트 스캔을 통해 등록가능하며, 일반적으로 가장 많이 사용되는 어노테이션이다.
+  - Component Scanning
+    - @Component
+    - @Controller
+    - @Service
+    - @Repository
+    - @Configuration
+
+- SpringBootApplication 에서 Component Scan 을 통해 해당 어노테이션을 확인하면 자동으로 빈으로 등록해주게 된다.
+- OwnerRepository의 경우 spring-data-jpa 가 제공해주는 구현체를 빈으로 등록해준다.
+- 특정 인터페이스를 상속받게 되면 해당 인터페이스의 구현체를 찾아 주입해준다.
+
+```
+/*SampleController.java 파일*/
+package org.springframework.samples.petclinic.sample;
+
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class SampleController {
+
+}
+/*SampleControllerTest.java 파일*/
+package org.springframework.samples.petclinic.sample;
+
+import org.assertj.core.api.AssertionsForClassTypes;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
+import org.springframework.test.context.junit4.SpringRunner;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class sampleControllerTest {
+    @Autowired
+    ApplicationContext applicationContext;
+
+    @Test
+    public void testDI(){
+        SampleController bean = applicationContext.getBean(SampleController.class);
+        AssertionsForClassTypes.assertThat(bean).isNotNull();
+    }
+}
+```
+
+- 위와 같이 @Controller 어노테이션을 통해 Bean 으로 등록이 되며, 사용하는 클래스에서는 @Autowired (또는 생성자) 를 통해 간편하게 주입할 수가 있다.
+
+- 두번째 방법으로  Java 설정 파일을 통해 등록하는 방법이 있다.
+
+```
+/*SampleConfig.java 파일*/
+package org.springframework.samples.petclinic.sample;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration //설정 관련 애노테이션
+public class SampleConfig {
+    @Bean // Bean으로 아래 객체 직접등록
+    public SampleController sampleController(){
+        return new SampleController();
+    }
+}
+
+/*SampleController.java 파일*/
+package org.springframework.samples.petclinic.sample;
+
+import org.springframework.stereotype.Controller;
+
+//@Controller 생략을 해도 빈으로 등록이 된다. (위에서 직접 등록해놨기 때문에)
+public class SampleController {
+
+}
+```
+
+1. @Configuration
+   @Configuration 또한 , @Component 안에 속한 어노테이션으로, Component Scan 에 포함된다.
+2. @Bean
+   컴포넌트 스캔을 하면서, @Bean 어노테이션이 포함된 메소드를 IoC 컨테이너로 등록한다.
+
+- 마찬가지로 IoC 컨테이너에 등록된 Bean 을 @Autowired 를 통해 사용하고자 하는 클래스로 주입할 수 있다.
+
+의존성 주입
+
+```
+@Autowired
+public OwnerController(OwnerRepository clinicService) {
+    this.owners = clinicService;
+}
+```
+
+- 생성자에도 원래 @Autowired라는 어노테이션을 통해 의존성 주입이 가능했으나, 스프링 4.3 부터는 어떠한 클래스의 생성자가 하나뿐이고, 생성자로 주입받는 매개변수가 Bean으로 등록되어 있다면, Bean으로 자동 주입하도록 하는 기능이 있으므로 @Autowired 어노테이션은 생략이 가능하다.
+
+- 따라서 필드로 직접 주입을 하고자 하는 경우 아래와 같이 사용이 가능하다.
+
+```
+@Autowired
+public OwnerController(OwnerRepository clinicService) {
+    this.owners = clinicService;
+}
+```
+
+- 아래와 같이 Setter 메소드를 이용한 주입 또한 가능하다.
+
+```
+private OwnerRepository owners;
+
+@Autowired
+public void setOwnsers(OwnerRepository owners) {
+	this.owner = owners;
+}
+```
+
+- 하지만 위 2가지 방법에는 필히 사용해야하는 인스턴스가 없더라도 클래스 생성이 가능하다는 단점이 있고,
+- 스프링에서는 아래와 같이 생성자를 통해 레퍼런스가 존재하는 경우에만 인스턴스를 생성할 수 있는 방법을 권장한다.
+
+```
+private final OwnerRepository owners;
+
+public OwnerController(OwnerRepository clinicService) {
+    this.owners = clinicService;
+}
+```
+
+- Lombok Annotaion을 활용하면 의존성 주입을 쉽게 할 수 있다.
+
+
+
+#### 4.2.4.2  관점 지향 프로그래밍 (Aspect Oriented Programming)
+
+- `AOP`는 `Aspect Oriented Programming`의 약자로 `관점 지향 프로그래밍`이라고 한다. 
+
+![aop](D:\GitHub\cloudnative\doc\assets\aop1)
+
+- 위의 A, B, C 클래스에서 동일한 색깔의 선들의 의미는 클래스들에 나타나는 `비슷한(중복되는) 메소드, 필드, 코드들이 나타난다는 것`입니다. 이러한 경우 만약 클래스 A에 주황색 부분을 수정해야 한다면 B, C 클래스들에 주황색 부분에 해당하는 곳을 찾아가 전부 코드를 수정해야 한다.
+- 이런식으로 반복되는 코드를 `흩어진 관심사 (Crosscutting Concerns)`라 한다.
+- 이렇게 `흩어진 관심사`를 `AOP는 Aspect를 이용해서 해결`한다. 
+- 위의 사진의 아래쪽을 보면 흩어져 있는 부분들을 Aspect를 이용해서 모듈화 시킨 것을 볼 수 있습니다.
+-  그리고 개발자가 모듈화 시킨 Aspect를 사진에서 위에 클래스에 어느 곳에 사용해야 하는지만 정의해주면 됩니다.
+
+> 결론적으로 Aspect로 모듈화하고 핵심적인 비즈니스 로직에서 분리하여 재사용하겠다는 것이 AOP의 취지다.
+
+##### 스프링 AOP 특징
+
+![spring-aop](./assets/spirng_aop.png)
+
+- 스프링도 위에서 본 `프록시를 이용해서 AOP를 구현`하고 있다.
+
+-  AOP의 핵심 기능은 `코드를 수정하지 않으면서 공통 기능의 구현을 추가하는 것`이라고 강조하고 있다. 
+
+- 핵심 기능에 공통 기능을 추가하는 방법에는 아래와 같이 3가지 방법이 존재한다.
+
+  - 컴파일(AspectJ) : 자바 파일을 클래스 파일로 만들 때 바이트코드를 조작하여 적용된 바이트코드를 생성
+  - 로드 타임(CGLIB Proxy) : 컴파일은 원래 클래스 그대로 하고, 클래스를 로딩하는 시점에 끼워서 넣는다.
+  - 런타임(JDK Proxy) : A라는 클래스를 빈으로 만들 때 A라는 타입의 프록시 빈을 감싸서 만든 후에, 프록시 빈이 클래스 중간에 코드를 추가해서 넣는다.
+
+  
+
+#### 4.2.4.3  Annotaion
+
+- 사전적 의미로는 주석이라는 뜻이지만, 자바에서 `Annotaion(@)`은 코드 사이에 특별한 의미, 기능을 수행하도록 하는 기술이다.
+
+- 프로그램 코드의 일부가 아닌 프로그램에 관한 데이터를 제공하고, 코드에 정보를 추가하는 정형화된 방법이다.
+
+- 어노테이션을 사용하면 코드가 깔끔해지고 재사용이 가능하다.
+
+- 컴파일러에게 코드 작성 문법 에러를 체크하도록 정보를 제공한다.
+
+- 소프트웨어 개발 툴이 빌드나 배치시 코드를 자동으로 생성할 수 있도록 정보를 제공한다.
+
+- 실행시(런타임시) 특정 기능을 실행하도록 정보를 제공한다.
+
+- 어노테이션을 사용하기 위한 순서는 아래와 같다.
+
+  - 어노테이션을 정의한다.
+
+  - 클래스에 어노테이션을 배치한다.
+
+  - 코드가 실행되는 중에 Reflection 또는 AOP를 이용하여 추가 정보를 획득
+
+    
+
+### 4.2.4 PSA(Portable Service Abstraction)란?
+
 - PSA란 **환경의 변화와 관계없이 일관된 방식의 기술로의 접근 환경을 제공하는 추상화 구조**를 말한다**.**
 
 - 이는 POJO 원칙을 철저히 따른 Spring의 기능으로 Spring에서 동작할 수 있는Library들은 POJO원칙을 지키게끔 PSA형태의 추상화가 되어있음을 의미한다.
 
 
 > #### "잘 만든 인터페이스 하나가 열 클래스 부럽지 않다"
->
 
 - PSA가 적용된 코드라면 나의 코드가 바뀌지 않고, 다른 기술로 간편하게 바꿀 수 있도록 확장성이 좋고, 기술에 특화되어 있지 않는 코드를 의미한다.
 
 - Spring은 **Spring Web MVC, Spring Transaction, Spring Cache 등의 다양한 PSA를 제공**하고 있다.
-  
 
 #### 4.2.1.1 Spring Web MVC
 
@@ -1122,8 +1330,6 @@ Employees findById(Integer id);
 
 - 즉, **기존 코드는 변경하지 않은 채로 트랜잭션을 실제로 처리하는 구현체를 사용 기술에 따라 바꿀 수 있는 것**이다.
 
-
-
 #### 4.2.1.3 Spring Cache
 
 - Cache도 마찬가지로 JCacheManager, ConcurrentMapCacheManager, EhCacheCacheManager와 같은 여러가지 구현체를 사용할 수 있다.
@@ -1140,14 +1346,16 @@ List<User> findAllUser();
 
 - 덕분에 코드는 더 견고해지고 기술이 바뀌어도 유연하게 대처할 수 있게 된다.
 
-
+  
 
 ### 4.2.5 Spring Boot Auto Configuration 
 
 [using-boot-disabling-specific-auto-configuration](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-auto-configuration.html#using-boot-disabling-specific-auto-configuration)
 
 - Spring Boot는 Spring과 마찬가지로 component-scan을 통해 component들을 찾고 bean 생성을 진행한다.
+
 - 그 과정에서 우리가 설정한 bean들이 생성된다.
+
 - 예를들면, @Controller, @RestController, @Service, @Repository 그리고 @Configuration에 등록한 @Bean 과 같은 설정 이고 그 과정에서 Spring Boot에서 미리 작성해둔 auto configuration에 의해 추가적인 bean들도 함께 생성된다.
 
 - Spring에서는 ThreadPoolTaskExecutor를 사용하기 위해서는 우리가 해당 bean을 등록해야했지만 Spring Boot에서는 등록하지 않아도 해당 bean이 자동으로 생성되기 때문에 사용할 수 있게된다.
@@ -1197,7 +1405,7 @@ public class Application {
 - @ComponentScan에 입력된 com.dveamer.sample 값은 component scan를 시작할 패키지 위치이다.
 - com.dveamer.sample 하위 모든 패키지를 component scan 범위로 잡겠다는 설정이다.
 - package 위치를 입력하지 않는다면 com.dveamer.sample.Application이 놓여진 패키지(com.dveamer.sample)가 기본 값으로 사용된다. 여러 패키지 위치를 scan 대상으로 설정하는 것도 가능하다.
--  component scan을 통해서 모은 component들의 정보와 Spring Boot가 spring.factories 파일에 사전에 정의한 AutoConfiguration 내용에 의해 bean 생성이 진행된다.
+- component scan을 통해서 모은 component들의 정보와 Spring Boot가 spring.factories 파일에 사전에 정의한 AutoConfiguration 내용에 의해 bean 생성이 진행된다.
 
 
 
@@ -1256,6 +1464,7 @@ org.springframework.boot.autoconfigure.condition.OnWebApplicationCondition
 ```
 
 - 해당 필터들은 각 AutoConfiguration이 가진 @Conditional을 가지고 조건 만족여부를 체크 한다. 그리고 조건이 맞지 않을 경우 해당 AutoConfiguration이 동작하지 않도록 제외 시키는 역할을 수행한다.
+
   - [org.springframework.boot.autoconfigure.condition.OnBeanCondition](https://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/condition/OnBeanCondition.java)
 
     특정 bean들의 존재유무에 대해서 다루는 필터이다.
@@ -1308,7 +1517,7 @@ public class TaskExecutionAutoConfiguration {
 ```
 
 - @Lazy가 걸려있기 때문에 Spring Boot 기동시에 생성되지 않고 ThreadPoolTaskExecutor가 필요한 상황에서 bean이 생성이 요청된다.
--  Executor.class와 같은 class type인 bean이 이미 생성되지 않은 경우에 @ConditionalOnMissingBean 조건이 만족되고 bean생성이 진행된다. 
+- Executor.class와 같은 class type인 bean이 이미 생성되지 않은 경우에 @ConditionalOnMissingBean 조건이 만족되고 bean생성이 진행된다. 
 - 즉, 우리가 아래와 같은 Executor bean을 생성하는 설정을 해뒀다면 우리가 설정한 bean이 생성되고 TaskExecutionAutoConfiguration 에 의해서는 bean생성이 이뤄지지 않는다. 반대로 우리가 Executor bean 등록을 설정하지 않았더라도 필요한 상황이되면 해당 bean이 생성되게 된다.
 
 ```java
@@ -1339,7 +1548,7 @@ public class CustomizedAsyncConfig {
 - 작업을 위해 필수적으로 필요한 bean이 미리 생성되어있는지 체크할 때 사용할 수 있다.
 
 - 예를들어, JdbcTemplate를 생성하기 위해서는 DataSource가 필요한 경우  아래의 JdbcTemplate bean 생성 설정은 @ConditionalOnBean이 함께 사용되어 dataSource라고 정의된 bean이 존재할 때만 JdbcTemplate bean을 생성한다.
--  만약에 dataSource가 존재하지 않는다면 JdbcTemplate을 만들 수도 없을 뿐더러 만들 필요가 없기 때문에 auto configuration 과정에서 JdbcTemplate을 bean 생성을 진행하지 않는다.
+- 만약에 dataSource가 존재하지 않는다면 JdbcTemplate을 만들 수도 없을 뿐더러 만들 필요가 없기 때문에 auto configuration 과정에서 JdbcTemplate을 bean 생성을 진행하지 않는다.
 
 ```java
     @Bean 
@@ -1436,8 +1645,6 @@ public class MyConfiguration {
 
 
 
-
-
 ### 4.2.6 Spring Initializr
 
 #### https://start.spring.io/
@@ -1448,8 +1655,6 @@ public class MyConfiguration {
 [![img](./assets/image-20220627130205043.png)](https://github.com/kirobo77/scg/blob/main/assets/image-20220627130205043.png)
 
 - Spring Initializr은 다양한 **IDE 환경 및 API/CLI 형태로도 제공**한다.
-
-
 
 
 
@@ -1710,656 +1915,6 @@ SpEL를 사용할 때에는 @Value를 사용해야 한다.
  그 외에는 @ConfiguConfigurationProperties를 사용하는게 코드가 깔끔해진다.
 
 
-
-## 4.7 Spring Cloud Stream
-
-### 4.7.1 개요
-
-- **Spring Cloud Stream은 공유 메시징 시스템과 연결된 확장성이 뛰어난 이벤트 기반 마이크로서비스를 구축하기 위한 프레임워크이다**.
-- Spring Cloud Stream Application과 Message Middleware System 직접 붙지는 않는다.
-- 중간에 Spring Cloud Stream이 제공하는 Binder 구현체를 중간에 두고 통신을 하기 때문에 Application에서는 미들웨어 독립적으로 추상화된 방식으로 개발 진행이 가능하다.
-- 그리고 Application과 Binder 는 아래 그림과 같이 inputs, outputs 채널과 통신을 하게 된다.
-
-### 4.7.2 Spring Cloud Stream와 연동 가능한 다양한 바인더 구현
-
-- RabbitMQ
-
-- Apache Kafka
-
-- Kafka Streams
-
-- Amazon Kinesis
-
-- Google PubSub *(partner maintained)*
-
-- Solace PubSub+ *(partner maintained)*
-
-- Azure Event Hubs *(partner maintained)*
-
-- AWS SQS *(partner maintained)*
-
-- AWS SNS *(partner maintained)*
-
-- Apache RocketMQ *(partner maintained)*
-
-  
-
-### 4.7.3 Spring Cloud Stream 의 core building blocks 
-
-- Destination Binders: 외부 메시징 시스템과의 통합을 제공하는 구성 요소
-- Destination Bindings: 외부 메시징 시스템과 최종 사용자가 제공하는 애플리케이션 코드(생산자/소비자) 간의 브리지
-- Message: 생산자와 소비자가 대상 바인더(및 외부 메시징 시스템을 통한 다른 응용 프로그램)와 통신하는 데 사용하는 표준 데이터 구조
-
-
-
-### 4.7.4 dependency 설정 
-
-- pom.xml
-
-  ```yaml
-  <dependency>
-     <groupId>org.springframework.cloud</groupId>
-     <artifactId>spring-cloud-stream-binder-kafka</artifactId>
-     <exclusions>
-         <exclusion>
-             <groupId>org.springframework.cloud</groupId>
-             <artifactId>spring-cloud-function-core</artifactId>
-         </exclusion>
-         <exclusion>
-             <groupId>org.springframework.cloud</groupId>
-             <artifactId>spring-cloud-function-context</artifactId>
-         </exclusion>
-         <exclusion>
-             <groupId>org.springframework.cloud</groupId>
-             <artifactId>spring-cloud-function-web</artifactId>
-         </exclusion>
-     </exclusions>
-  </dependency>
-  <dependency>
-     <groupId>org.springframework.cloud</groupId>
-     <artifactId>spring-cloud-function-core</artifactId>
-     <version>3.2.3</version>
-  </dependency>
-  <dependency>
-     <groupId>org.springframework.cloud</groupId>
-     <artifactId>spring-cloud-function-context</artifactId>
-     <version>3.2.3</version>
-  </dependency>
-  <dependency>
-     <groupId>org.springframework.cloud</groupId>
-     <artifactId>spring-cloud-function-web</artifactId>
-     <version>3.2.3</version>
-  </dependency>
-   ...
-   
-  <dependencyManagement>
-      <dependencies>
-          <dependency>
-              <groupId>org.springframework.cloud</groupId>
-              <artifactId>spring-cloud-dependencies</artifactId>
-              <version>2021.0.1</version>
-              <type>pom</type>
-              <scope>import</scope>
-          </dependency>
-      </dependencies>
-  </dependencyManagement>
-  ```
-
-  - spring-cloud-dependencies 는 취약점 보완 때문에 **2021.0.1** 으로 해야 한다.
-  - spring-cloud-function 은 취약점 보완 때문에 **3.2.3** 으로 해야 한다.
-  - spring cloud stream 을 사용하기 위해서 spring-cloud-stream-binder-kafka dependency 만 추가해 주면 된다.
-  - spring cloud 를 사용하기 위해서는 spring-cloud-dependencies dependencyManagement 를 추가해 주어야 한다.
-  - 현재 spring boot 버전은 2.6.6 버전에서 dependency 가 호환 된다.
-
-
-
-### 4.7.5 kafka 메시지 Event 전송 (Producer)
-
-#### 4.7.5.1 producer 프로젝트 설정
-
-- application.xml
-
-```yaml
-  spring:
-      cloud:
-          stream:
-            kafka:
-              binder:
-                brokers:
-                - sa-cluster-kafka-route-bootstrap-kafka-system.apps.cluster01.cz-dev.icis.co.kr:443
-                configuration:
-                  security:
-                    protocol: SASL_SSL
-                  sasl:
-                    mechanism: SCRAM-SHA-512
-                    jaas:
-                      config: org.apache.kafka.common.security.scram.ScramLoginModule required username="order" password="WpxJedx0IIWj";
-                  ssl:
-                    truststore.location: classpath:/truststore.jks
-                    truststore.type: JKS
-                    truststore.password: new1234 
-            bindings:
-              boardCreate-out-0:
-                destination: order-board-create
-              boardUpdate-out-0:
-                destination: order-board-update   
-              boardDelete-out-0:
-                destination: order-board--delete
-```
-
-- bindings : 연결할 Topic을 설정 한다. 
-
-  - boardCreate-out-0 : 이벤트를 전송할 대상이며 producer 인 경우는 보통 "out" 으로 하며 consumer는 "in" 을 사용한다.
-  
-  - -out-0 : 0은 접속할 brokers의 첫번째 kafka-cluster 주소이다.
-
-  - destination: 연동할 Topic를 등록한다.
-  
-  - kafka.binder.brokers: kaka-cluster를 연동할 주소들이다. 
-    - kafka-cluster가 2개 이상일경우 ","로 구분하여 등록 가능하다.
-    - security :  SASL 기반의 TLS로  SASL_SSL 를 등록한다.
-    - sasl.mechanism :  SCRAM-SHA-512
-    - sasl.jaas : kafka-user의 유저명과 패스워드를 입력 한다. (주의: 끝에 ";" 꼭 추가해야 한다 ) 
-  - ssl: kafka-cluster 외부에서 접속하기 위해서 okd의 kafka router는 https로 할당되기 때문에 SSL로 접속 해야 한다. 
-  
-- 프로젝트에 resource 폴더 하위에 truststore.jks 파일을 위치 시키며 jks 생성시 입력한 password 를 입력해 준다. 
-  
-- truststore.jks를 resources 하위에 위치 시킨다.
-  
-    ```
-    resources
-    ├── config
-    │   ├── application-dev.yml
-    │   ├── application-local.yml
-    │   └── application.yml
-    └── truststore.jks
-    ```
-  
-    
-
-#### 4.7.5.2 Events 객체 생성
-
-- BoardCreateEvent.java
-
-  ```java
-  @AllArgsConstructor
-  @NoArgsConstructor
-  @Getter
-  @Builder
-  @ToString
-  public class BoardCreateEvent {
-      private String eventName;
-      private int num;
-      private String title;
-      private String contents;
-      private String writeId;
-      private String writeName;
-      private LocalDateTime writeDate;
-  }
-  ```
-
-- BoardUpdateEvent.java
-
-  ```
-  @AllArgsConstructor
-  @NoArgsConstructor
-  @Getter
-  @Builder
-  @ToString
-  public class BoardUpdateEvent {
-      private String eventName;
-      private int num;
-      private String title;
-      private String contents;
-      private String modifyId;
-      private String modifyName;      
-      private LocalDateTime  modifyDate;
-  }
-  ```
-
-- BoardDeleteEvent.java
-
-  ```java
-  @AllArgsConstructor
-  @NoArgsConstructor
-  @Getter
-  @Builder
-  @ToString
-  public class BoardDeleteEvent {
-      private String eventName;
-      private int num;
-   
-  }
-  ```
-
-- ResultMessage.java
-
-  ```java
-  
-  @Getter
-  @Setter
-  public class ResultMessage {
-   
-      private String successYn;
-      private String statusCode;
-      private String code;    
-      private String message;
-      private String devMessage;
-       
-       
-      public ResultMessage() {       
-      }
-   
-      public ResultMessage(String successYn) {
-          this.successYn = successYn;
-          this.statusCode = null;
-          this.message = null;
-          this.devMessage = null;
-      }
-      public ResultMessage(String successYn, String message) {
-          this.successYn = successYn;
-          this.statusCode = null;
-          this.message = message;
-          this.devMessage = null;
-      }
-       
-      public ResultMessage(String successYn,String statusCode, String message, String devMessage) {
-          this.successYn = successYn;
-          this.statusCode = null;
-          this.message = message;
-          this.devMessage = null;
-      }
-   
-  }
-  
-  ```
-
-  
-
-#### 4.7.5.3 kafka 메시지 전송
-
-- BoardEventService.java
-
-  ```java
-  @Service
-  @AllArgsConstructor
-  @Slf4j
-  public class BoardEventService {
-   
-      private final StreamBridge streamBridge;
-      private static String SUCCESS = "Y";
-   
-      public ResultMessage boardCreate(BoardCreateEvent event) {
-   
-          boolean result = streamBridge.send("boardCreate-out-0", event);
-          log.info("====[Producer]====== boardCreate send to kafka Topic  BoardCreateEvent: {} , result :{}", event,
-                  result);
-          return getReturnResultMessage(result);
-   
-      }
-   
-      public ResultMessage boardUpdate(BoardUpdateEvent event) {
-   
-          boolean result = streamBridge.send("boardUpdate-out-0", event);
-          log.info("====[Producer]====== boardCreate send to kafka Topic  BoardUpdateEvent: {} , result :{}", event,
-                  result);
-          return getReturnResultMessage(result);
-   
-      }
-   
-      public ResultMessage boardDelete(BoardDeleteEvent event) {
-   
-          boolean result = streamBridge.send("boardDelete-out-0", event);
-          log.info("====[Producer]======boardDelete send to kafka Topic  BoardDeleteEvent: {} , result :{}", event,
-                  result);
-          return getReturnResultMessage(result);
-   
-      }
-   
-      private ResultMessage getReturnResultMessage(boolean result) {
-          ResultMessage resultMsg = new ResultMessage("N", "실패");
-          if (result) {
-              resultMsg.setSuccessYn(SUCCESS);
-              resultMsg.setMessage("성공");
-              return resultMsg;
-          }
-          return resultMsg;
-   
-      }
-   
-  }
-  ```
-
-  
-
-- StreamBridge: kafka에 메시지를 전송하기 위해서 Spring cloud stream에서 제공하는 StreamBridge 클래스를 활용한다.
-
-- 전송할 메시지를 이벤트 객체에 담아서 전송한다. "boardCreate-out-0" 는 application.yaml에 등록된 destination 키에 해당한다.
-
-  ```java
-  boolean result = streamBridge.send("boardCreate-out-0", event);
-  ```
-
-- BoardController.java
-
-  ```java
-  @RestController
-  @Slf4j
-  @RequiredArgsConstructor
-  public class BoardController {
-   
-      private final BoardEventService boardEventService;
-   
-      @PostMapping("/create")
-      public ResultMessage createBoard(@RequestBody BoardCreateEvent event ) {
-      
-          return   boardEventService.boardCreate(event);
-      }
-   
-      @PostMapping("/update")
-      public ResultMessage updateBoard(@RequestBody BoardUpdateEvent event ) {  
-          return   boardEventService.boardUpdate(event);
-      }
-   
-      @PostMapping("/delete")
-      public ResultMessage deleteBoard(@RequestBody BoardDeleteEvent event ) {  
-          return   boardEventService.boardDelete(event);
-      }
-   
-  }
-  ```
-
-  
-
-### 4.7.6 kafka 메시지 Event 수신 (Consumer)
-
-#### 4.7.6.1 consumer 프로젝트 설정 
-
-- application.yml
-
-```yaml
-spring:
-  cloud:
-    stream:
-      function:  ## 반드시 있어야 함
-        definition: boardCreate;boardUpdate;boardDelete
-      kafka:
-        default:
-           consumer:
-             ack-mode: MANUAL_IMMEDIATE        
-        binder:
-          brokers:
-          - sa-cluster-kafka-route-bootstrap-kafka-system.apps.cluster01.cz-dev.icis.co.kr:443
- 
-          configuration:
-            security:
-              protocol: SASL_SSL
-            sasl:
-              mechanism: SCRAM-SHA-512
-              jaas:                
-                config: org.apache.kafka.common.security.scram.ScramLoginModule required username="order" password="WpxJedx0IIWj";
-            ssl:
-              truststore.location: classpath:/truststore.jks
-              truststore.type: JKS
-              truststore.password: new1234
- 
-      bindings:      
-        boardCreate-in-0:         
-          destination: order-board-create
-          group: order-board-group
-        boardUpdate-in-0:
-          destination: order-board-update
-          group: order-board-group
-        boardDelete-in-0:
-          destination: order-board-delete
-          group: order-board-group
-```
-
-- spring cloud stream consumer 는 spring cloud function 을 사용해야 한다. 따라서 function 빈을 등록해 줘야 한다. 
-
-  - function 빈 등록 
-
-    ```yaml
-    function:  
-       definition: boardCreate;boardUpdate;boardDelete
-    ```
-
-    - kafka.binder.brokers: kaka-cluster를 연동할 주소들이다. 
-      - kafka-cluster가 2개 이상일경우 ","로 구분하여 등록 가능하다. 
-      - security :  SASL 기반의 TLS로  SASL_SSL 를 등록한다.
-      - sasl.mechanism :  SCRAM-SHA-512 
-      - sasl.jaas : kafka-user의 유저명과 패스워드를 입력 한다. (주의: 끝에 ";" 꼭 추가해야 한다.) 
-      - ssl: kafka-cluster 외부에서 접속하기 위해서 okd의 kafka router는 https로 할당뒤기 때문에 SSL로 접속 해야 한다. 
-        - 프로젝트에 resource 폴더 하위에 truststore.jks 파일을 위치 시키며 jks 생성시 입력한 password 를 입력해 준다. 
-
-- yaml설정은 producer 설정과 동일하다. 
-
-- truststore.jks를 resources 하위에 위치 시킨다.
-
-  ```
-  resources
-  ├── config
-  │   ├── application-dev.yml
-  │   ├── application-local.yml
-  │   └── application.yml
-  └── truststore.jks
-  ```
-
-  
-
-#### 4.7.6.2 이벤트 객체 생성
-
-- BoardCreateEvent.java
-
-  ```java
-  @AllArgsConstructor
-  @NoArgsConstructor
-  @Getter
-  @Builder
-  @ToString
-  public class BoardCreateEvent {
-      private String eventName;
-      private int num;
-      private String title;
-      private String contents;
-      private String writeId;
-      private String writeName;
-      private LocalDateTime writeDate;
-   
-  }
-  ```
-
-- BoardUpdateEvent.java
-
-  ```java
-  @AllArgsConstructor
-  @NoArgsConstructor
-  @Getter
-  @Builder
-  @ToString
-  public class BoardUpdateEvent {
-      private String eventName;
-      private int num;
-      private String title;
-      private String contents;
-      private String modifyId;
-      private String modifyName;      
-      private LocalDateTime  modifyDate;
-       
-   
-  }
-  ```
-
-- BoardDeleteEvent.java
-
-  ```java
-  @AllArgsConstructor
-  @NoArgsConstructor
-  @Getter
-  @Builder
-  @ToString
-  public class BoardDeleteEvent {
-      private String eventName;
-      private int num;
-   
-  }
-  ```
-
-  
-
-#### 4.7.6.3 kafka 메시지 수신
-
-- BoardEventFunction.java
-
-  ```java
-  @Configuration
-  @Slf4j
-  @RequiredArgsConstructor
-  public class BoardEventFunction {
-        
-      private Jackson2JsonObjectMapper mapper = new Jackson2JsonObjectMapper();
-   
-      @Bean
-      public Consumer<Message<String>> boardCreate(){
-          return ((msg) -> {
-              log.info("boardCreate 이벤트 수신: {}",msg); 
-              try {
-                  BoardCreateEvent event = mapper.fromJson(msg.getPayload(),BoardCreateEvent.class );
-                  log.info("==============[Consumer]============BoardCreateEvent: {}", event.toString());
-                  //repositoryBoardCreate(event); 
-                  Acknowledgment acknowledgment = msg.getHeaders().get(KafkaHeaders.ACKNOWLEDGMENT, Acknowledgment.class);           
-                  if(acknowledgment != null){
-                      log.info("==============[Consumer]===Acknowledgment provided");            
-                      acknowledgment.acknowledge();
-                  }             
-              } catch (Exception e) {             
-                  e.printStackTrace();
-              }
-          });
-      }
-   
-      @Bean
-      public Consumer<Message<String>> boardUpdate(){
-          return ((msg) -> {
-              log.info("boardUpdate 이벤트 수신: {}",msg); 
-              try {
-                  BoardUpdateEvent event = mapper.fromJson(msg.getPayload(),BoardUpdateEvent.class );
-                  log.info("=============[Consumer]===================BoardUpdateEvent: {}", event.toString());
-                  //repositoryBoardUpdate(event);
-                   
-              } catch (Exception e) {             
-                  e.printStackTrace();
-              }
-   
-          });
-      }
-      @Bean
-      public Consumer<Message<String>> boardDelete(){
-          return ((msg) -> {
-              log.info("boardDelete 이벤트 수신: {}",msg); 
-              try {
-                  BoardDeleteEvent event = mapper.fromJson(msg.getPayload(),BoardDeleteEvent.class );
-                  log.info("==============[Consumer]==================BoardDeleteEvent: {}", event.toString());
-                  //repositoryBoardDelete(event);
-              } catch (Exception e) {             
-                  e.printStackTrace();
-              }
-          });
-   
-      }
-   
-      private void repositoryBoardCreate(BoardCreateEvent event) {   
-          
-          log.info("======== BoardCreateEvent : {}", event.toString());
-      }
-   
-      private void repositoryBoardUpdate(BoardUpdateEvent event){
-          log.info("======== BoardUpdateEvent : {}", event.toString());
-           
-      }
-      private void repositoryBoardDelete(BoardDeleteEvent event) {
-          log.info("======== BoardDeleteEvent : {}", event.toString());
-      }
-  }
-  ```
-
-- topic의 consumer는 spring cloud function bean으로 등록 해야 한다. 
-
-- 각 빈의 메소드명을 바탕으로 kafka topic destination 키와 매핑된다. 
-
-  -  예를 들어 @Bean public Consumer<String> boardCreate() 의 **boardCreate**는 아래와 같이 매핑된다.
-
-    ```yaml
-    bindings:      
-       boardCreate-in-0: 
-         destination: sa-app-order-board-create
-    ```
-    
-    
-
-### 4.7.6 Consumer 수동 커밋 방법 
-
-- spring kafka binder는 기본 커밋 설정으로 되어 있다. 따라서 consumer에서 poll 하면 offset이 커밋 된다. (특정 주기 마다 자동으로 commit)
-
-- 일반적으로 중요도가 낮은 로그성 데이터가 이에 해당된다. 하지만 Consumer 가 읽어온 데이터 처리 실패시 보상 로직이나 재처리가 필요한 AP라면, 자동커밋이 아닌 수동커밋으로 설정 후 로직 성공에 의해 커밋되도록 수정해야 한다.
-
-
-
-#### 4.7.6.1 수동커밋설정
-
-- Consumer의 autoCommitOffset= true로 되어 있다. 하지만 spring cloude stream kafka binder 3.1버전 부터 이 속성은 더 이상 사용되지 않는다. (Deprecated) 
-
-- autoCommit을 false로 설정하기 위해서는 ackMode를 사용하며 MANUAL 또는 MANUAL_IMMEDIATE로 설정 하면 된다.
-
-- application.yaml 에 다음과 같이 설정한다.
-
-  ```yaml
-  spring:
-    cloud:
-      stream:
-        kafka:
-          default:
-             consumer:
-               ack-mode: MANUAL_IMMEDIATE
-  ```
-
-- MANUAL 보다는MANUAL_IMMEDIATE로 설정하여 acknowledgment 통보하면 즉시 커밋 되도록 한다. 
-
-- kafka의 default로 선언하면 각 채널에 중복으로 설정을 피할 수 있고 모든 채널에 공통으로 설정된다. 
-
-
-
-#### 4.7.6.2 Consumer에서 acknowledgment 사용 
-
-- consumer.ackMode로 전환 되면 consumer 메서드가 수신하는 메시지에 kafka_acknowledgment 라는 헤더가 있다. 이를 이용하여 acknowledge를 통보할수 있다. 
-
-  ```java
-  @Bean
-  public Consumer<Message<String>> boardCreate(){
-      return ((msg) -> {
-          log.info("boardCreate 이벤트 수신: {}",msg); 
-          try {
-           
-              BoardCreateEvent event = mapper.fromJson(msg.getPayload(),BoardCreateEvent.class );
-              log.info("==============[Consumer]============BoardCreateEvent: {}", event.toString());
-               
-              // 메세지 DB 처리작업 예
-              repositoryBoardCreate(event);
-               
-              Acknowledgment acknowledgment = msg.getHeaders().get(KafkaHeaders.ACKNOWLEDGMENT, Acknowledgment.class);           
-              if(acknowledgment != null){
-                  log.info("==============[Consumer]===Acknowledgment provided");            
-                  acknowledgment.acknowledge();
-              }
-                           
-          } catch (Exception e) {             
-              e.printStackTrace();
-          }
-      });
-  }
-  ```
-  
-  
 
 ## 4.8 Spring Cloud Eureka
 
@@ -2721,9 +2276,7 @@ public class ClientConfiguration {
 ### 4.6.8 Circuit Breaker 지원
 
 - Feign은 resilience4j 를 지원하므로 활성화했다면 Fallback 패턴을 구현할 수 있다.
-
 - Fallback 패턴을 사용하면 원격 서비스 호출이 실패할 때 예외를 생성하는 대신 서비스 소비자가 대체 코드 경로를 실행하여 다른 수단을 통해 작업을 수행하려고 한다.
-
 - 목표를 달성하려면 속성 파일에 *feign.circuitbreaker.enabled=true 를 추가하여 resilience4j를 활성화해야 한다*
 
 - 이를 통해 서비스가 실패할 때 호출되는 Fallback 메서드를 구현할 수 있다.
@@ -2754,6 +2307,34 @@ public interface JSONPlaceHolderClient {
     // APIs
 }
 ```
+
+- Circuit Breaker 설정
+  - circuitBreaker 활성화 시 resilience4j는  다음의 설정들을 제공해준다.
+
+![img](./assets/resillience4j.png)
+
+- 예제
+
+```
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        waitDurationInOpenState: 30s
+        slowCallRateThreshold: 80 
+        slowCallDurationThreshold: 5s
+        registerHealthIndicator: true
+    instances:
+      default:
+        baseConfig: default
+  timelimiter:
+    configs:
+      default:
+        timeoutDuration: 6s # slowCallDurationThreshold보다는 크게 설정되어야 함
+        cancelRunningFuture: true
+```
+
+ 
 
 ### 4.6.8 로깅
 
@@ -3421,7 +3002,7 @@ public void greetingListener(Greeting greeting) {
 
 
 
-![img](https://blog.kakaocdn.net/dn/o0y9z/btqXgoJFibK/qmSiVsKsNVvPtyr1daNZ21/img.png)
+![img](./assets/zipkin2)
 
 
 
@@ -3708,23 +3289,23 @@ https://github.com/kirobo77/config.git
 
 ## 5.10 리펙토링(Exam)
 
-### 5.10.1 Hexagonal 아키텍처(Port and Adapter 패턴)에 맞게 서비스를 리펙토링
+### 5.10.1 AOP 추가
+
+- 메소드별 수행 시간을 출력해 본다.
+
+### 5.10.2 Custom Annotaion 추가
+
+- Custom Annotaion 을 통해 특정 API 호출 시 로그를 출력해 본다.
+
+### 5.10.3 Hexagonal 아키텍처(Port and Adapter 패턴)에 맞게 서비스를 리펙토링
 
 - Apater, Port, Domain 영역으로 패키지를 분리해 본다.
 
-
-
-### 5.10.2 성능을 고려하여 서비스를 개선
-
-- Kafka 및 Redis cache를 활용하여 API에 대한 성능을 개선해 본다.
-
-
-
-### 5.10.3 JUNIT을 활용한 테스트코드를 작성
+### 5.10.4 JUNIT을 활용한 테스트코드를 작성
 
 - Junit을 사용하여 단위/통합테스트를 작성해 본다.
 
-#### 5.10.3.1 @WebMvcTest
+#### 5.10.4.1 @WebMvcTest
 
 - Application Context 완전하게 Start 시키지 않고 web layer를 테스트 하고 싶을 때 @WebMvcTest를 사용하는 것을 고려한다. Present Layer 관련 컴포넌트만 스캔을 한다.
 
@@ -3741,7 +3322,7 @@ https://github.com/kirobo77/config.git
   }
   ```
 
-#### 5.10.3.2 MockMvc
+#### 5.10.4.2 MockMvc
 
 -  애플리케이션을 배포하지 않고도, 서버의 MVC 동작을 테스트 할 수 있는 라이브러리이며 Controller 레이어 단위테스트에 많이 사용된다. 
 
@@ -3759,7 +3340,7 @@ https://github.com/kirobo77/config.git
           .andExpect(jsonPath("$.message").value(ErrorCode.OK.getMessage()));
   ```
 
-#### 5.10.3.3 @MockBean
+#### 5.10.4.3 @MockBean
 
 - 가짜 객체를 생성하며 해당 비지니스의 단위 테스트에만 집중할 수 있도록 도와준다. 
 
@@ -3790,16 +3371,16 @@ public class MockBeanAnnotationIntegrationTest {
 
 
 
-### 5.10.4 컨테이너 환경에서 서비스를 실행
+### 5.10.5 컨테이너 환경에서 서비스를 실행
 
-#### 5.10.4.1 JIB
+#### 5.10.5.1 JIB
 
 - Jib을 통한 도커 이미지 생성(https://github.com/GoogleContainerTools/jib)
 - docker daemon 없이도 Java 애플리케이션을 Docker 혹은 OCI 규격의 컨테이너 이미지를 만들어 주는 도구
 -  maven 플러그인 및 gradle 으로 제공되어 Dockerfile 에 대한 별도의 지식 없이도 애플리케이션을 이미지로 만들 수 있다. 
 - JAR를 single layer 로 빌드하는 것이 아니라, Application을 종속성, 리소스, 클래스 등으로 좀 더 세분화 한 Layer로 빌드하여 코드 변경시 증분만을 변경할 수 있어 이미지 생성속도가 빠르다.
 
-#### 5.10.4.2 설정
+#### 5.10.5.2 설정
 
 ```xml
   			<plugin>
@@ -3818,7 +3399,7 @@ public class MockBeanAnnotationIntegrationTest {
   			</plugin>
 ```
 
-#### 5.10.4.3 실행
+#### 5.10.5.3 실행
 
 - jib가 제공하는 Maven의  phase와 goal은 아래의 3가지이다.
   - jib:build : image 를 빌드한다, <to> 의 경로로 push한다.
@@ -3831,17 +3412,849 @@ mvn clean compile jib:dockerBuild
 
 
 
+---------------------
 
+# [별첨]
+
+## 1. Annotation 종류
+
+## 1.1  Spring Annotaion
+
+### @SpringBootApplication
+
+Srping Boot를 자동으로 실행시켜주는 어노테이션으로 Bean 등록은 두 단계로 진행된다.
+
+- @ComponentScan을 통해 Component들을 Bean으로 등록한다.
+- @EnableAutoConfiguration을 통해 미리 정의해둔 자바 설정 파일들을 Bean으로 등록한다.
+  (Bean은 스프링 IoC 컨테이너에 의해 인스턴스화되어 조립되거나 관리되는 객체)
+
+### @Configuration
+
+스프링 IoC Container에게 해당 클래스가 Bean 구성 Class임을 알려주는 어노테이션이다.
+@Bean을 해당 클래스의 메소드에 적용하면 @Autowired로 빈을 부를 수 있다.
+
+
+
+### @EnableAutoConfiguration
+
+Spring Application Context를 만들 때 자동으로 설정하는 기능을 켠다.
+classpath의 내용에 기반해서 자동 생성해 준다.
+만약 tomcat-embed-core.jar가 존재하면 톰캣 서버가 setting된다.
+
+### @ComponentScan
+
+@Component, @Service, @Repository, @Controller, @Configuration이 붙은 빈들을 찾아서
+Context에 빈을 등록해 주는 어노테이션이다.
+@Component 어노테이션이 있는 클래스에 대하여 bean 인스턴스를 생성한다.
+
+Spring에서 @Component로 다 쓰지 않고 @Repository, @Service, @Controller등을 사용하는 이유는, 예를들어 @Repository는 DAO의 메소드에서 발생할 수 있는 unchecked exception들을 스프링의 DataAccessException으로 처리할 수 있기 때문이다.
+
+또한 가독성에서도 해당 애노테이션을 갖는 클래스가 무엇을 하는지 단 번에 알 수 있다.
+
+
+
+### @Component
+
+개발자가 직접 작성한 Class를 Bean으로 등록하기 위한 어노테이션이다.
+`@ComponentScan`선언에 의해 특정 패키지 안의 클래스들을 자동 스캔하여 @Component 어노테이션이 있는 클래스들에 대하여 Bean 인스턴스를 생성한다.
+
+```java
+@Component
+public class Student {
+	public Stdudent() {
+    	System.out.println("hello");
+    }
+}
+
+@Component(value="mystudent")
+public class Student {
+	public Stdudent() {
+    	System.out.println("hello");
+    }
+}
+```
+
+Component에 대한 추가 정보가 없다면 Class의 이름을 camelCase로 변경한 것이 Bean id로 사용된다.
+하지만 @Bean과 다르게 @Component는 name이 아닌 value를 이용해 Bean의 이름을 지정한다.
+
+
+
+### @Bean
+
+@Bean은 개발자가 직접 제어가 불가능한 외부 라이브러리 등을 Bean으로 만드려할 때 사용되는 어노테이션이다.
+
+```java
+@Configuration
+public class ApplicationConfig {
+	@Bean
+    public ArrayList<String> array() {
+    	return new ArrayList<String>();
+    }
+}
+```
+
+ArrayList같은 라이브러리등을 Bean으로 등록하기 위해서는 별도로 해당 라이브러리 객체를 반환하는 Method를 만들고 @Bean을 사용하면 된다.
+
+위의 경우 @Bean에 아무런 값을 지정하지 않았으므로 Method 이름을 camelCase로 변경한 것이 Bean id로 등록된다.
+메소드가 arrayList()인 경우 arrayList가 Bean id가 된다.
+
+```java
+@Configuration
+public class ApplicationConfig {
+	@Bean(name="myarray")
+    public ArrayList<String> array() {
+    	return new ArrayList<String>();
+    }
+}
+```
+
+@Bean에 name이라는 값을 이용하면 원하는 id로 Bean을 등록할 수 있다.
+
+
+
+### @Autowired
+
+필드, setter 메소드, 생성자에 사용하며 Type에 따라 알아서 Bean을 주입해주는 역할을 한다.
+객체에 대한 의존성을 주입시킨다.
+@Autowired을 사용하면 스프링이 자동적으로 값을 할당한다.
+Controller 클래스에서 DAO나 Service에 관한 객체들을 주입 시킬 때 많이 사용한다.
+
+### @Controller
+
+Spring MVC의 Controller로 사용되는, 클래스 선언을 단순화 시켜주는 어노테이션이다.
+
+### @RestController
+
+Spring에서 Controller 중 View로 응답하지 않는 Controller를 의미한다.
+method의 반환 결과를 JSON 형태로 반환한다.
+
+`@RestController`가 적혀있는 Controller의 method는 HttpResponse로 바로 응답이 가능하다.
+@ResponseBody 역할을 자동적으로 해주는 어노테이션이다.
+
+### @Service
+
+Service class에서 쓰이는 어노테이션으로, `비즈니스 로직`을 수행하는 Class라는 것을 나타내는 용도이다.
+
+### @Repository
+
+DAO class에서 쓰이는 어노테이션이다.
+`DB`에 접근하는 method를 가지고 있는 Class에서 쓰인다.
+
+### @Resource
+
+@Autowired와 마찬가지로 Bean 객체를 주입해주는데 차이점은 Autowired는 타입으로, Resource는 이름으로 연결해준다.
+
+javax.annotation.Resource
+표준 자바(JSR-250 표준) Annotation으로, Spring Framework 2.5.* 부터 지원 가능한 Annotation이다.
+
+어노테이션 사용으로 인해 특정 Framework에 종속적인 어플리케이션을 구성하지 않기 위해서는 @Resource를 사용할 것을 권장한다.
+
+@Resource를 사용하기 위해서는 class path 내에 jsr250-api.jar 파일을 추가해야 한다.
+필드, 입력 파라미터가 1개인 bean property setter method에 적용 가능하다.
+
+### @PreConstruct, @PostConstruct
+
+의존하는 객체를 생성한 이후 초기화 작업을 위해 객체 생성 전이나 후에 실행해야 할 method 앞에 붙여 사용한다.
+
+### @PreDestroy
+
+객체를 제거하기 전에 해야할 작업을 수행하기 위해 사용한다.
+
+### @PropertySource
+
+해당 프로퍼티 파일을 Environment로 로딩하게 해준다.
+
+클래스에 @PropertySource("classpath:/settings.properties")라고 적고 클래스 내부에 @Resource를 Environment타입의 멤버 변수앞에 적으면 매핑된다.
+
+### @Lazy
+
+지연 로딩을 지원하는 어노테이션이다.
+@Component나 @Bean 어노테이션이다 같이 쓰는데 Class가 로드될 때 스프링에서 바로 bean등록을 마치는 것이 아니라 실제로 사용될 때 로딩되게 방법이다.
+
+### @Value
+
+propertis에서 값을 가져와 적용할 때 사용한다.
+
+```java
+@Value("${spring.redis.host}")
+private String host;
+```
+
+### @RequestMapping
+
+어떤 URL을 어떤 method가 처리할 지 매핑해주는 어노테이션이다.
+Controller나 Controller의 메소드에 적용한다.
+요청을 받는 형식인 GET/POST/PUT/PATCH/DELETE를 정의하기도 한다.
+(정의하지 않으면 자동적으로 GET으로 설정된다.)
+
+```java
+@RequestMapping("/")
+public String index(Model model) {
+    model.addAttribute("list", bannerService.listAll());
+
+	return "index";
+}
+```
+
+### @CookieValue
+
+쿠키 값을 파라미터로 전달 받을 수 있는 방법으로, 해당 쿠키가 존재하지 않으면 500에러를 발생시킨다.
+
+```java
+public String view(@CookieValue(value="auth") String auth) {
+	.....
+}
+```
+
+### @CrossOrigin
+
+CORS 보안상의 문제로 브라우저에서 리소스를 현재 origin에서 다른 곳으로의 AJAX요청을 방지하기 위해 사용한다.
+@RequestMapping이 있는 곳에 사용하면 해당 요청은 타 도메인에서 온 ajax요청을 처리한다.
+
+### @ModelAttribute
+
+view에서 전달해주는 파라미터를 Class(VO/DTO)의 멤버 변수로 binding 해주는 어노테이션이다.
+`<input name="id" />` 처럼 어떤 태그의 name값이 해당 Class의 멤버 변수명과 일치하고 setmethod명도 일치해야한다.
+
+### @GetMapping
+
+@RequestMapping(Method=RequestMethod.GET)과 같은 역할을 한다.
+이 외에도 @PostMapping,@PutMapping, @DeleteMapping 등의 어노테이션도 있다.
+
+### @SessionAttributes
+
+Session에 데이터를 넣을 때 사용하는 어노테이션이다.
+@SessionAttributes("name")이라고 하면 Model에 key값이 "name"으로 있는 값은 자동으로 세션에도 저장되게 한다.
+
+### @Valid
+
+유효성 검증이 필요한 객체임을 지정한다.
+
+### @RequestAttribute
+
+Request에 설정되어 있는 속성 값을 가져올 수 있다.
+
+### @RequestBody
+
+요청이 온 데이터를 바로 Class나 model로 매핑하기 위한 어노테이션이다.
+POST나 PUT, PATCH로 요청을 받을때 Request로 넘어온 body 값들을 자바 타입으로 파싱해준다.
+
+### @RequestHeader
+
+Request의 header값을 가져올 수 있으며, 메소드의 파라미터에 사용한다.
+
+### @RequestParam
+
+`@PathVariable`과 유사하다.
+Request의 파라미터에서 가져오는 것이다. method의 파라미터에 사용한다.
+`?name=rara`와 같은 쿼리 파라미터를 파싱해준다.
+
+### @RequestPart
+
+Request로 온 MultipartFile을 바인딩해준다.
+
+```java
+@RequestPart("file") MultipartFile file
+```
+
+### @ResponseBody
+
+HttpMessageConverter를 이용하여 JSON(or xml)으로 요청에 응답할 수 있게 해주는 어노테이션이다.
+view가 아닌 `JSON 형식의 값을 응답할 때` 사용하는 어노테이션으로, 문자열을 리턴하면 그 값이 http response header가 아닌 response body에 들어간다.
+
+이미 @RestController 어노테이션이 붙어 있다면, 쓸 필요가 없다.
+허나 그렇지 않은 단순 컨트롤러라면, HttpResponse로 응답 할 수 있게 해준다.
+
+만약 객체를 return하는 경우 JACKSON 라이브러리에 의해 문자열로 변환되어 전송된다.
+context에 설정된 viewResolver를 무시한다고 보면된다.
+
+### @PathVariable
+
+method 파라미터 앞에 사용하면서 해당 URL에서 `{특정값}`을 변수로 받아올 수 있다.
+HTTP 요청에 대해 매핑되는 request parameter 값이 자동으로 binding 된다.
+URI에서 각 구분자에 들어오는 값을 처리해야 할 때 사용한다.
+
+### @ExceptionHandler(ExceptionClassName.class)
+
+해당 클래스의 예외(Exception)를 캐치해서 처리한다.
+
+### @ControllerAdvice
+
+Class위에 ControllerAdvice를 붙이고 어떤 예외를 잡아낼 것인지는 각 메소드 상단에 **@ExceptionHandler(예외클래스명.class)** 를 붙여서 사용한다.
+
+```java
+@ControllerAdvice
+public class CustomExceptionHandler {
+
+	@ExceptionHandler(AbstractException.class)
+	protected ResponseEntity<ErrorResponse> handleCustomException(AbstractException e) {
+		ErrorResponse errorResponse = ErrorResponse.builder()
+													.code(e.getStatusCode())
+													.message(e.getMessage())
+													.build();
+		return new ResponseEntity<>(errorResponse, HttpStatus.resolve(e.getStatusCode()));
+	}
+}
+```
+
+### @RestControllerAdvice
+
+@RestControllerAdvice = @ControllerAdvice + @ResponseBody
+
+### @ResponseStatus
+
+사용자에게 원하는 Response code와 reason을 return 해주는 어노테이션이다.
+예외처리 함수 앞에 사용한다.
+
+```java
+@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+@ExceptionHandler(Exception.class)
+public Exception handleAllException() {
+	System.out.println("error from GlobalExceptionHandler");
+	return new Exception();
+}
+```
+
+### @Transactioal
+
+DB 트랜잭션을 설정하고 싶은 method에 어노테이션을 적용하면 method 내부에서 일어나는 DB 로직이 전부 성공하게되거나 DB 접근중 하나라도 실패하면, 다시 롤백할 수 있게 해주는 어노테이션이다.
+
+```java
+@Transactional(readOnly=true)  -> 읽기 전용임
+
+@Transactional(rollbackFor=Exception.class)  -> 해당 Exception이 발생하면 롤백한다.
+
+@Transactional(noRollbackFor=Exception.class)  -> 해당 Exception이 발생해도 커밋한다.
+
+@Transactional(timeout=10)  ->  10초 안에 완료되지 않으면 롤백한다.
+```
+
+모든 처리가 정상적으로 됐을때만 DB에 커밋하며 그렇지 않은 경우엔 커밋하지 않는다.
+비즈니스 로직과 트랜잭션 관리는 주로 `Service`에서 관리한다.
+따라서 일반적으로 DB 데이터를 등록/수정/삭제 하는 Service 메소드는 @Transactional를 필수적으로 가져간다.
+
+### @Cacheable
+
+method 앞에 지정하면 해당 method를 처음 호출하면 캐시에 적재하고, 그 다음부터는 동일한 method 호출이 있을 때 캐시에서 결과를 가져와서 return하므로 method 호출 횟수를 줄여주는 어노테이션이다.
+주의할 점은 **입력이 같으면 항상 출력이 같은 method**에 적용해야한다.
+
+### @CachePut
+
+`캐시를 업데이트` 하기 위해서 method를 항상 실행하게 강제하는 어노테이션이다.
+해당 어노테이션이 있으면 항상 method 호출을 하기 때문에 @Cacheable과 같이 사용해서는 안된다.
+
+### @CacheEvict
+
+캐시에서 데이터를 제거하는 트리거로 동작하는 method에 붙이는 어노테이션이다.
+
+캐시된 데이터는 언제가는 지워져야한다.
+그러지 않으면 결과값이 변경이 일어났는데도 기존의 데이터(캐시된 데이터)를 불러와서 오류가 발생할 수 있다.
+
+물론 캐시 설정에서 캐시 만료시간을 줄 수도 있다.
+
+```java
+@CacheEvict(value="cacheKey"), @CacheEvict(value="cacheKey", allEntries=true)
+```
+
+### @CacheConfig
+
+클래스 레벨에서 공통의 캐시 설정을 공유하는 기능이다.
+
+### @Scheduled
+
+정해진 시간에 method를 실행하게 하는 기능이다.
+
+```java
+@Transactional
+@Scheduled(cron = "0 0 1 * * *")
+public void weatherDateScheduling() {
+	diaryServiceImpl.saveWeatherDate();
+}
+```
+
+## 1.2 Lombok Annotation
+
+### @NoArgsConstructor
+
+기본생성자를 자동으로 추가한다.
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+기본생성자의 접근 권한을 protected로 제한할 수도 있다.
+
+Entity Class를 프로젝트 코드상에서 기본생성자로 생성하는 것은 금지하고, JPA에서 Entity 클래스를 생성하도록 허용하기 위해 사용한다.
+
+### @AllArgsConstructor
+
+모든 필드 값을 파라미터로 받는 생성자를 추가한다.
+
+### @RequiredArgsConstructor
+
+final이나 @NonNull인 필드 값만 파라미터로 받는 생성자를 추가한다.
+
+### @Getter
+
+Class 내 모든 필드의 Getter 메소드를 자동 생성해준다.
+
+### @Setter
+
+Class 내 모든 필드의 Setter 메소드를 자동 생성해준다.
+Controller에서 @RequestBody로 외부에서 데이터를 받는 경우엔 기본생성자 + Set 메소드를 통해서만 값이 할당된다.
+그러나 Entity Class에서는 Setter를 사용하면 안되기 때문에 DTO클래스를 생성해서 DTO타입으로 받아야 한다.
+
+### @ToString
+
+Class 내 모든 필드의 toString 메소드를 자동 생성한다.
+
+### @EqualsAndHashCode
+
+equals와 hashCode method를 오버라이딩 해주는 어노테이션이다.
+
+```java
+@EqualsAndHashCode(callSuper = true)
+```
+
+callSuper 속성을 통해 equals와 hashCode 메소드 자동 생성 시 부모 클래스의 필드까지 감안할지 안 할지에 대해서 설정할 수 있다.
+즉, callSuper = true로 설정하면 부모 클래스 필드 값들도 동일한지 체크하며, callSuper = false로 설정(기본값)하면 자신 클래스의 필드 값들만 고려한다.
+
+### @Builder
+
+어느 필드에 어떤 값을 채워야 할지 명확하게 정하여 객체 생성 시점에 값을 채워준다.
+생성 시점에 값을 채워는 것은 생성자와 같지만 Builder를 사용하면 **어느 필드에 어떤 값을**넣어야 할 지 명확하게 인지할 수 있다.
+
+```java
+@Builder
+public class Memer {
+	@Id
+	private String uderId;
+    private String userName;
+}
+
+//객체 생성
+Member member = Member.builder().userId(parameter.getUserId())
+						.userName(parameter.getUserName()).build();
+```
+
+### @Data
+
+@Getter, @Setter, @EqualsAndHashCode, @AllArgsConstructor을 포함한 Lombok에서 제공하는 필드와 관련된 모든 코드를 생성한다.
+모든 기능을 허용하기 때문에 사용하지 않는 것이 좋다.
+
+## 1.3 JPA Annotaion
+
+JPA를 사용하면 DB 데이터에 작업할 경우 실제 쿼리를 사용하지 않고 Entity 클래스의 수정을 통해 작업한다.
+
+### @Entity
+
+실제 DB 테이블과 매핑될 Class임을 나타낸다.
+
+#### DTO 클래스란?
+
+Request와 Response용 DTO는 View를 위한 클래스로, 자주 변경이 필요한 클래스이다.
+Entity 클래스와 DTO 클래스를 분리하는 이유는 View Layer와 DB Layer를 철저하게 분리하기 위해서다.
+
+테이블과 매핑되는 Entity 클래스가 변경되면 여러 클래스에 영향을 끼치게 되는 반면 View와 통신하는 DTO 클래스(Request/Response 클래스)는 자주 변경되므로 분리해야 한다.
+
+### @Table
+
+Entity Class에 매핑할 테이블 정보를 알려준다.
+어노테이션을 생략하면 Class명을 테이블명으로 매핑한다.
+
+```java
+@Entity
+@Table(name = "MEMBER")
+public class Member {
+}
+```
+
+### @Id
+
+해당 테이블의 PK 필드를 의미한다.
+
+### GeneratedValue
+
+PK의 생성 규칙을 나타낸다.
+가능한 Entity의 PK는 Long 타입의 Auto_increment를 추천한다.
+기본값은 AUTO로 MySQL의 auto_increment와 같이 자동으로 증가하는 정수형 값이 된다.
+
+### @Column
+
+테이블의 컬럼을 나타내며 선언하지 않더라도 해당 Class의 필드는 모두 컬럼이 된다.
+@Column을 생략하면 필드명을 사용해서 컬럼명과 매핑한다.
+
+이 어노테이션은 기본값 외에 추가로 변경이 필요한 옵션이 있을 경우 사용한다.
+
+```java
+@Entity
+public class Post {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
+	@Column(nullable = false)
+	private String title;
+
+	@Column(nullable = false)
+	private String author;
+}
+```
+
+### @EnableJpaAuditing
+
+Java에서 JPA를 사용하여 Entity-DB 테이블을 매핑할 때 공통적으로 도메인들이 가지고 있는 필드나 컬럼들이 존재하는데, 대표적으로 생성일자, 수정일자, 식별자 같은 필드 및 컬럼이 있다.
+모든 Entity마다 해당 필드들을 넣어서 생성하는 것은 상당히 비효율적이다.
+
+DB에서 누가, 언제하였는지 생성일, 수정일 컬럼은 대단히 중요한 데이터로, JPA에서는 `Audit`이라는 기능을 제공하고 있다.
+Audit은 감시하다, 감사하다라는 뜻으로 Spring Data JPA에서 `시간에 대해서 자동으로 값을 넣어주는 기능`이다.
+
+Entity를 영속성 컨텍스트에 저장하거나 조회를 수행한 후에 update를 하는 경우 매번 시간 데이터를 입력하여 주어야 하는데, audit을 이용하면 자동으로 시간을 매핑하여 데이터베이스의 테이블에 넣어준다.
+
+```java
+@Getter
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
+public class Timestamped {
+
+	@CreatedDate
+	private LocalDateTime createdAt;
+
+	@LastModifiedDate
+	private LocalDateTime modifiedAt;
+}
+```
+
+| 어노테이션                                    | 설명                                                         |
+| --------------------------------------------- | ------------------------------------------------------------ |
+| @MappedSuperclass                             | JPA Entity 클래스들이 해당 클래스를 상속할 경우, createDate, modifiedDate를 컬럼으로 인식 |
+| @EntityListeners(AuditingEntityListener.class | 해당 클래스에 Auditing 기능을 포함                           |
+| @CreatedDate                                  | Entity가 생성되어 저장될 때 시간이 자동 저장                 |
+| @LastModifiedDate                             | 조회한 Entity의 값을 변경할 때 시간이 자동 저장              |
+
+```java
+@Entity
+@Getter
+@NoArgsConstructor
+public class Post extends Timestamped{
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+
+	@Column(nullable = false)
+	private String title;
+
+	@Column(nullable = false)
+	private String author;
+
+	@Column(nullable = false)
+	private String content;
+
+	@Column(nullable = false)
+	private String password;
+
+	public Post(PostRequestDto requestDto) {
+		this.title = requestDto.getTitle();
+		this.author = requestDto.getAuthor();
+		this.content = requestDto.getContent();
+		this.password = requestDto.getPassword();
+	}
+
+	public void update(PostRequestDto requestDto) {
+		this.title = requestDto.getTitle();
+		this.author = requestDto.getAuthor();
+		this.content = requestDto.getContent();
+		this.password = requestDto.getPassword();
+	}
+}
+```
+
+Post 클래스가 @MappedSuperclass가 적용된 Timestamped 클래스를 상속하기 때문에 JPA가 생성일자, 수정일자 컬럼을 인식하게 된다.
+그리고 영속성 컨텍스트에 저장 후 Timestamped 클래스의 Auditing 기능으로 인해서 트랜잭션 커밋 시점에 Hibernate가 자동으로 시간 값을 채워주는것을 확인 할 수가 있다.
+
+> 💡SpringBoot의 실행 클래스에 `@EnableJpaAuditing` 어노테이션을 적용해주어야 JpaAuditing 기능이 활성화 된다.
+
+
+
+## 2 Custom Annotaion 
+
+### 2.1 어노테이션의 종류 
+
+어노테이션을 직접 개발하기 위해서는 Java에서 제공하는 어노테이션에 대해 먼저 알아야 한다. Java의 어노테이션은 크게 built-in 어노테이션(Built-in Annotation)과 Meta 어노테이션(Meta Annotation)이 존재한다.
+
+- built-in 어노테이션
+  - Java 코드에 적용되는 어노테이션
+  - @Overrie, @Deprecated, @SuppressWarnings 등이 존재
+
+- meta 어노테이션
+  - 다른 어노테이션에 적용되기 위한 어노테이션 
+  - @Retention, @Documneted, @Target, @Inherited, @Repeatable 등이 존재
+
+##### 2.2.1 Meta 어노테이션의 종류 
+
+- Retention: 해당 어노테이션의 정보를 어느 범위까지 유지할 것인지를 설정함
+  - RetentionPolicy.SOURCE: 컴파일 전까지만 유효하며 컴파일 이후에는 사라짐
+  - RetentionPolicy.CLASS: 컴파일러가 클래스를 참조할 때까지 유효함
+  - RetentionPolicy.RUNTIME: Reflection을 사용하여 컴파일 이후에도 JVM에 의해 계속 참조가 가능함
+- Documented: JavaDoc 생성 시 Document에 포함되도록 함
+- Target: 해당 어노테이션이 사용되는 위치를 결정함
+  - ElementType.PACKAGE : 패키지 선언시
+  - ElementType.TYPE : 타입 선언시
+  - ElementType.CONSTRUCTOR : 생성자 선언시
+  - ElementType.FIELD : 맴버 변수 선언시
+  - ElementType.METHOD : 메소드 선언시
+  - ElementType.ANNOTATION_TYPE : 어노테이션 타입 선언시
+  - ElementType.LOCAL_VARIABLE : 지역 변수 선언시
+  - ElementType.TYPE_PARAMETER : 매개 변수 타입 선언시
+- Inherited: 해당 어노테이션을 하위 클래스에 적용함
+- Repeatable: Java8부터 지원하며, 연속적으로 어노테이션을 선언하는 것을 허용함
+
+### 2.3 Annotaion  개발
+
+- RestMemberController를 개발하여 Swagger로 문서화한다고 하자. 여기서 @Api와 @RestController 어노테이션은 다른 RestController들에도 공통적으로 적용되는데, 이를 커스텀 어노테이션으로 만들어 반복 작업을 줄여보도록 하자.
+
+```
+@Api
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/member")
+public class RestMemberController {
+
+    private final MemberService memberService;
+    
+    @ApiOperation("멤버 목록 반환")
+    @GetMapping("/list")
+    public ResponseEntity<String> upload() {
+        return ResponseEntity.ok(memberService.getList());
+    }
+
+}
+```
+
+#### 2.3.1 어노테이션 생성
+
+- 어노테이션은 다음과 같이 인터페이스 앞에 @를 붙여서 생성할 수 있다.
+
+```
+public @interface RestControllerWithSwagger {
+    
+}
+```
+
+- 위와 같이 생성된 어노테이션은 다른 곳에서 참조되지만 아무런 기능도 하지 않는다.
+
+#### 2.3.2 메타 어노테이션 추가
+
+앞서 다른 어노테이션에 적용되기 위한 메타 어토네이션에 대해 살펴보았다. 그 중에서 필요한 것들을 적용하면 된다.
+
+```
+@Retention(RetentionPolicy.RUNTIME)
+@Inherited
+@Documented
+@Target(ElementType.TYPE)
+public @interface RestControllerWithSwagger {
+
+}
+```
+
+- 위의 예제에서는 컴파일 이후에도 JVM에 의해 계속 참조가 가능하도록 @Retention(RetentionPolicy.RUNTIME) 을 적용하였으며, 하위 클래스에도 적용가능하도록 @Inherited를 적용하였다.
+-  또한 javadoc에 의해 문서화가 되도록 @Documented를 적용하였으며, 타입 선언 시 어노테이션을 적용할 수 있도록 @Target(ElementType.TYPE)를 적용하였다. 
+- 여러 타겟을 원하는 경우에는 @Target({ElementType.TYPE, ElementType.Field}) 와 같이 사용하면 된다.
+
+#### 2.3.3 적용할 어노테이션 추가
+
+- 추가적으로 적용할 어노테이션이 있으면 추가해준다. 우리는 @Api와 @RestController라는 어노테이션을 공통으로 묶을 것이므로 이를 추가해준다.
+
+```
+@Api
+@RestController
+@Retention(RetentionPolicy.RUNTIME)
+@Inherited
+@Documented
+@Target(ElementType.TYPE)
+public @interface RestControllerWithSwagger {
+    String name() default "RestController";
+    String value();
+}
+```
+
+#### 2.3.4 변수 추가
+
+어노테이션에 값을 부여하기를 원한다면 변수를 다음과 같이 선언해줄 수 있다.
+
+```
+@Api
+@RestController
+@Retention(RetentionPolicy.RUNTIME)
+@Inherited
+@Documented
+@Target(ElementType.TYPE)
+public @interface RestControllerWithSwagger {
+    String name() default "RestController";
+    String value();
+}
+```
+
+#### 2.3.5 적용하기
+
+- 위와 같은 과정으로 어노테이션을 생성하였으면 이제 다음과 같이 적용할 수 있다.
+
+```
+@RestControllerWithSwagger(value = "RestMemberController", name = "RestMemberController")
+@RequiredArgsConstructor
+@Test1
+@RequestMapping("/member")
+public class RestMemberController {
+
+    private final MemberService memberService;
+
+    @ApiOperation("멤버 목록 반환")
+    @GetMapping("/list")
+    public ResponseEntity<String> upload() {
+        return ResponseEntity.ok(memberService.getList());
+    }
+
+}
+```
+
+## 3. aop
+
+- Aspect : 위의 사진에서 처럼 Aspect 안에 모듈화 시킨 것을 의미한다.
+- Advice : 실질적으로 어떤 일을 해야하는지를 담고 있다.
+- Pointcut : 어디에 적용해야 하는지에 대한 정보를 담고 있다.
+- Target : Aspect에 적용이 되는 대상
+- Join point : Advice가 적용될 위치, 끼어들 수 있는 지점. 메서드 진입 지점, 생성자 호출 시점, 필드에서 값을 꺼내올 때 등 다양한 시점에 적용가능(여러가지 합류 지점임)
+
+- defendency 설정
+
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-aop</artifactId>
+</dependency>
+```
+
+- 포인트컷에는 다양한 명시자를 이용할 수 있다.
+
+  | execution | Advice를 적용할 메서드를 명시할 때 사용합니다.               |
+  | --------- | ------------------------------------------------------------ |
+  | within    | 특정 타입에 속하는 메서드를 JoinPoint로 설정되도록 명시할 때 사용합니다. |
+  | bean      | 스프링 버전 2.5 버전부터 지원하기 시작했으며, 스프링 빈을 이용하여 JoinPoint를 설정합니다. |
+
+  - execution 명시자
+
+    execution([수식어] 리턴타입 [클래스이름].이름(파라미터)
+
+    - 수식어 : public, private 등 수식어를 명시합니다. (생략 가능)
+    - 리턴타입 : 리턴 타입을 명시합니다.
+    - 클래스이름 및 이름 : 클래스이름과 메서드 이름을 명시합니다. (클래스 이름은 풀 패키지명으로 명시해야합니다. 생략도 가능)
+    - 파라미터 : 메서드의 파라미터를 명시합니다.
+    - " * " : 모든 값을 표현합니다.
+    - " .. " : 0개 이상을 의미합니다.
+
+    Ex)
+
+    execution(public Integer com.edu.aop.*.*(*))
+
+     \- com.edu.aop 패키지에 속해있고, 파라미터가 1개인 모든 메서드
+
+     execution(* com.edu..*.get*(..))
+
+     \- com.edu 패키지 및 하위 패키지에 속해있고, 이름이 get으로 시작하는 파라미터가 0개 이상인 모든 메서드 
+
+     execution(* com.edu.aop..*Service.*(..))
+
+     \- com.edu.aop 패키지 및 하위 패키지에 속해있고, 이름이 Service르 끝나는 인터페이스의 파라미터가 0개 이상인 모든 메서드
+
+     execution(* com.edu.aop.BoardService.*(..))
+
+     \- com.edu.aop.BoardService 인터페이스에 속한 파마리터가 0개 이상인 모든 메서드
+
+     execution(* some*(*, *))
+
+     \- 메서드 이름이 some으로 시작하고 파라미터가 2개인 모든 메서드
+
+   
+
+  - within 명시자
+
+    Ex)
+
+    within(com.edu.aop.SomeService)								
+
+    - com.edu.aop.SomeService 인터페이스의 모든 메서드
+
+     within(com.edu.aop.*)
+
+     \- com.edu.aop 패키지의 모든 메서드
+
+    within(com.edu.aop..*)
+
+     \- com.edu.aop 패키지 및 하위 패키지의 모든 메서드												
+
+  
+
+  - bean 명시자
+
+    Ex)
+
+    bean(someBean)
+
+     \- 이름이 someBean인 빈의 모든 메서드
+
+    bean(some*)
+
+     \- 빈의 이름이 some으로 시작하는 빈의 모든 메서드
+
+  
+
+- 샘플소스
+
+```
+@Component
+@Aspect
+public class PerfAspect {
+
+    @Around("execution(* com.example..*.EventService.*(..))")
+    public Object logPerf(ProceedingJoinPoint pjp) throws Throwable {
+        long begin = System.currentTimeMillis();
+        Object reVal = pjp.proceed();
+        System.out.println(System.currentTimeMillis() - begin);
+        return reVal;
+    }
+    
+    @Around("@annotation(MyAnnotation)")
+    public Object logPerf(ProceedingJoinPoint pjp) throws Throwable{
+        long before = System.currentTimeMillis();
+        Object ret = pjp.proceed();
+        System.out.println(System.currentTimeMillis() - before);
+        return ret;
+    }
+}
+
+```
+
+- 위에서 실행 시간을 측정하는 공통 코드를 `Aspect 모듈`로 분리시켜서 작성할 수 있습니다. 
+- 그리고 `@Around()`에서 `execution`을 사용하여 `Advice를 적용할 범위`를 지정할 때 사용할 수 있습니다. 
+- 즉, 위의 코드로 해석을 해보면 `com.example 패키지 밑에 있는 모든 클래스에 적용을 하고, EventService 밑에 있는 모든 메소드에 적용해라` 라는 뜻입니다.
+
+- 이 밖에도 **@Around** 외에 타겟 메서드의 **Aspect** 실행 시점을 지정할 수 있는 어노테이션이 있다. 
+  - @Before (이전) : 어드바이스 타겟 메소드가 호출되기 전에 어드바이스 기능을 수행
+  - @After (이후) : 타겟 메소드의 결과에 관계없이(즉 성공, 예외 관계없이) 타겟 메소드가 완료 되면 어드바이스 기능을 수행
+  - @AfterReturning (정상적 반환 이후)타겟 메소드가 성공적으로 결과값을 반환 후에 어드바이스 기능을 수행
+  - @AfterThrowing (예외 발생 이후) : 타겟 메소드가 수행 중 예외를 던지게 되면 어드바이스 기능을 수행
+  - @Around (메소드 실행 전후) : 어드바이스가 타겟 메소드를 감싸서 타겟 메소드 호출전과 후에 어드바이스 기능을 수행
+
+
+
+
+
+--------------------------------------------
 
 [참고]
 
 - 클라우드네이티브 가이드라인(http://sw.tta.or.kr/notify/data_view.jsp?no=78)
-
 - 포트앤 아답터 아키텍처(https://engineering.linecorp.com/ko/blog/port-and-adapter-architecture/)
-
 - 헥사고날 아키텍처(https://engineering-skcc.github.io/microservice%20inner%20achitecture/inner-architecture-2/)
-
-  
+- MangKyu's Diary:티스토리(https://mangkyu.tistory.com/130 )
+- https://tailerbox.tistory.com/42
+- https://velog.io/@gillog/Spring-Annotation-%EC%A0%95%EB%A6%AC
 
 
 
