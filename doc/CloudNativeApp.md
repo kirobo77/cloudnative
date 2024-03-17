@@ -962,7 +962,7 @@ Cloud Native TrailMap
 
 - **Spring은 Spring Triangle이라고 부르는 핵심 3대요소를 제공해준다. 이는 각각 IoC , AOP , PSA를 일컫는다.**
 
-![](https://blog.kakaocdn.net/dn/lWkuv/btq9MEmLHyN/q6A6PnOdfE6L5AwdXjaOl0/img.png)
+![](./assets/spring_triangle.png)
 
 
 
@@ -1144,7 +1144,7 @@ public OwnerController(OwnerRepository clinicService) {
 
 - `AOP`는 `Aspect Oriented Programming`의 약자로 `관점 지향 프로그래밍`이라고 한다. 
 
-![aop](D:\GitHub\cloudnative\doc\assets\aop1)
+![aop](./assets/aop.png)
 
 - 위의 A, B, C 클래스에서 동일한 색깔의 선들의 의미는 클래스들에 나타나는 `비슷한(중복되는) 메소드, 필드, 코드들이 나타난다는 것`입니다. 이러한 경우 만약 클래스 A에 주황색 부분을 수정해야 한다면 B, C 클래스들에 주황색 부분에 해당하는 곳을 찾아가 전부 코드를 수정해야 한다.
 - 이런식으로 반복되는 코드를 `흩어진 관심사 (Crosscutting Concerns)`라 한다.
@@ -1766,11 +1766,13 @@ https://github.com/kirobo77/scg/blob/main/APIGateway.md
 1. 클라이언트는 Spring Cloud Gateway에 요청한다.
 2. 게이트웨이 핸들러 매핑이 요청이 경로와 일치한다고 결정하면 게이트웨이 웹 핸들러로 전송된다.
 3. 이 핸들러는 요청과 관련된 필터 체인을 통해 요청을 실행한다. 필터가 점선으로 구분되는 이유는 필터가 프록시 요청을 보내기 전후에 로직을 실행할 수 있기 때문이다.
-4. 모든 pre 필터 로직 실행된다. 
+4. 모든 pre 필터 로직이 실행된다. 
 5. 프록시 요청 실행된다.
-6. post 필터 로직가 실행된다.
+6. post 필터 로직이 실행된다.
 
+### 4.5.4 주요 기능
 
+https://github.com/kirobo77/scg/blob/main/APIGateway.md
 
 
 
@@ -3092,11 +3094,65 @@ spring:
 | Spring Data JDBC           |                                        |
 | Spring Data Redis          |                                        |
 | Spring with Kafka          |                                        |
-| Spring Cloud Stream        |                                        |
 
+### 5.2.2 JDK 설치
+
+- 다운로드 : [Eclipse Temulin Java 17](https://projects.eclipse.org/projects/adoptium.temurin/downloads)
+
+```
+지난 2021년 9월  14일 JAVA LTS(Long Term Support)인 JDK 17 GA 가 릴리즈되었다.
+JDK17은 향후 최대 2029년 9월까지 업데이트가 제공될 예정이다.
+참고로 다음 LTS는 JDK21 (2023년 9월)이 될 것으로 예상된다.
+
+2018년 오라클의 정책 변경에 따라 Oracle JDK 바이너리에 적용되던 BCL 라이선스가 바뀌어 이를 사용하려면 라이선스 구독이 필요하다. 따라서 대안으로는 OpenJDK 레퍼런스 소스 코드를 기반으로 제작된 여러 밴더사에서 제공중인 바이너리를 사용할 수 있으며, Azul Platform, Amazon Corretto, ReadHat OpenJDK, AdoptOpenJDK 가 그 대표적인 예이다.
+
+이 중에서 커뮤니티 기반 빌드인 AdoptOpenJDK 가 많이 쓰이는데, AdoptOpenJDK 의 최근 변화에 대해 알아보고 JDK 17 사용 방법을 살펴보고자 한다.
  
+AdoptOpenJDK 에서 Eclipse Adoptium 으로 이전
 
-## 5.2.2  마이크로서비스
+https://blog.adoptopenjdk.net/2021/08/goodbye-adoptopenjdk-hello-adoptium/
+2021년 8월 2일 AdoptOpenJDK 가 Eclipse Adoptium 으로 이전되었다.
+Eclipse Adoptium 는 최상위 프로젝트(TLP)를 의미하며, Eclipse Temurin 에서 Java SE 런타임을 진행한다.
+Eclipse Temurin 은 오라클 SE TCK(Technology Compatibility Kit)와 Eclipse AQAvit 테스트를 통과했다.
+Azul Platform Core OpenJDK 지원 구독을 통해 Temurin 에 대한 상용 지원이 가능하다고 한다.
+기존의 AdoptOpenJDK 웹사이트와 AdoptOpenJDK API는 당분간 유지할 예정이나, 빠른 시일내에 Eclipse Adoptium 으로 이전할 것을 권장하고 있다.
+```
+
+
+
+### 5.2.3 STS 설치
+
+- 다운로드 :  https://spring.io/tools
+
+![image-20221023203106620](./assets/image-20221023203106620.png)
+
+- 실행
+
+  ```
+  java -jar spring-tool-suite-4-4.16.0.RELEASE-e4.25.0-win32.win32.x86_64.self-extracting.jar
+  ```
+
+  
+
+### 5.2.4  Lombok 설치
+
+- 다운로드 : https://projectlombok.org/download
+
+![image-20221023202639158](D:\GitHub\cache\doc\assets\image-20221023202639158.png)
+
+- 실행
+
+  ```shell
+  java -jar lombok.jar
+  ```
+
+- 설치
+
+  ![image-20221023202859386](D:\GitHub\cache\doc\assets\image-20221023202859386.png)
+
+
+
+## 5.3  마이크로서비스
 
 - 마이크로서비스는 카탈로그 서비스, 사용자 서비스, 주문 서비스 3개로 구성되어 있으며, Java 17 언어를 이용한 Spring Boot(v2.7.2) + Spring Cloud(2021.0.3) API를 이용하여 개발되었다.
 
@@ -3110,7 +3166,7 @@ spring:
 
  
 
-## 5.3  시스템 구성도
+## 5.4  시스템 구성도
 
  
 
@@ -3118,7 +3174,7 @@ spring:
 
  
 
-## 5.4 미들웨어 구동
+## 5.5 미들웨어 구동
 
 ### 5.4.1 Zookeeper 실행
 
@@ -3142,6 +3198,15 @@ cd D:\cloudnative\infra\Redis-x64-3.2.100
 .\redis-server.exe .\redis.windows.conf
 ```
 
+- Redis 데이터 확인
+  - redis-cli 를 통해서 커맨드라인으로 Redis 관리가 가능하나 아래 윈도우용 툴을 통해 GUI로 확인 가능
+
+```
+D:\GitHub\cache\infra\RedisInsight-v2-win-installer.exe
+```
+
+![image-20221023193937008](D:\GitHub\cache\doc\assets\image-20221023193937008.png)
+
 ### 5.4.4 Zipkin 실행
 
 ```
@@ -3151,9 +3216,9 @@ java -jar zipkin.jar
 
 
 
-## 5.5  상품 주문 프로세스
+## 5.6  상품 주문 프로세스
 
-### 5.5.1 사용자 등록
+### 5.6.1 사용자 등록
 
 > http://localhost/users-ms/users
 >
@@ -3170,7 +3235,7 @@ java -jar zipkin.jar
 
 
 
-### 5.5.2 사용자 조회
+### 5.6.2 사용자 조회
 
 > http://localhost/user-ms/users/a3af7fbc-b06c-4edb-95e9-b0efa0abc94b/
 >
@@ -3183,7 +3248,7 @@ java -jar zipkin.jar
 
 
 
-### 5.4.3 상품 목록 조회
+### 5.6.3 상품 목록 조회
 
 > http://localhost/catalog-ms/catalogs
 >
@@ -3192,7 +3257,7 @@ java -jar zipkin.jar
 
  
 
-### 5.4.4 상품 주문
+### 5.6.4 상품 주문
 
 > http://localhost/order-ms/users/a3af7fbc-b06c-4edb-95e9- b0efa0abc94b/orders
 >
@@ -3209,7 +3274,7 @@ java -jar zipkin.jar
 
  
 
-### 5.4.5 상품 주문 조회
+### 5.6.5 상품 주문 조회
 
 > http://localhost/order-ms/users/a3af7fbc-b06c-4edb-95e9- b0efa0abc94b/orders
 
@@ -3217,7 +3282,7 @@ java -jar zipkin.jar
 
 
 
-## 5.5  MicroService간 통신
+## 5.7  MicroService간 통신
 
 - Demo Application은 상품 주문이 요청되었을 때, 주문 서비스로 사용자가 요청한 주문 정보를 전달하게 된다. 
 - 그리고 사용자 서비스에서 사용자의 정보 확인 시, 해당 사용자가 주문한 상품의 목록을 확인할 수 있는데 여기에서 사용자 마이크로서비스로부터 주문 마이크로서비스로 주문 상품 목록을 요청하게 된다. 
@@ -3225,7 +3290,7 @@ java -jar zipkin.jar
 
  
 
-## 5.6  Messaging Service를 통한 데이터 동기화
+## 5.8  Messaging Service를 통한 데이터 동기화
 
 - 사용자가 상품을 주문할 때 입력했던 주문 수량의 정보는 Kafka Messaging Service를 통해 카탈로그 서비스에 전달된다. 주문 서비스에서 직접 카탈로그 서비스로 정보를 전달하는 것이 아니라, Kafka Messaging Service를 통해 메시지가 전달되며, 이 때 메시지를 전달하는 측을 Publisher, 메시지를 받는 측을 Consumer라고 한다.
 
@@ -3239,7 +3304,7 @@ java -jar zipkin.jar
 
 
 
-## 5.7 Cache Service를 통한 데이터 조회
+## 5.9 Cache Service를 통한 데이터 조회
 
 - 카탈로그 서비스는 사용자가 상품을 주문할때 수량이 업데이트 된다. 카탈로그 서비스는 일반적인  E-commerce 애플리케이션에서 가장 많이 호출되는 서비스이다.
 
@@ -3255,7 +3320,7 @@ java -jar zipkin.jar
 
 
 
-## 5.8 Git을 통한 외부 설정 관리
+## 5.10 Git을 통한 외부 설정 관리
 
 - 각각의 마이크로서비스는 Spring Cloud Config 서버를 통해 설정을 외부에서 제어할 수 있다. 이를 통해 마이크로서비스별 설정에 대해 중앙에서 관리할 수 있고 실행환경에서 설정정보를 동적으로 제어할 수 있는 기능을 제공한다. 
 
@@ -3265,7 +3330,7 @@ https://github.com/kirobo77/config.git
 
 
 
-## 5.9 테스트
+## 5.12 테스트
 
 | 서비스 명       | URI                                                          | 설명                        |
 | --------------- | ------------------------------------------------------------ | --------------------------- |
@@ -3287,25 +3352,25 @@ https://github.com/kirobo77/config.git
 
 
 
-## 5.10 리펙토링(Exam)
+## 5.11 리펙토링(Exam)
 
-### 5.10.1 AOP 추가
+### 5.11.1 AOP 추가
 
 - 메소드별 수행 시간을 출력해 본다.
 
-### 5.10.2 Custom Annotaion 추가
+### 5.11.2 Custom Annotaion 추가
 
 - Custom Annotaion 을 통해 특정 API 호출 시 로그를 출력해 본다.
 
-### 5.10.3 Hexagonal 아키텍처(Port and Adapter 패턴)에 맞게 서비스를 리펙토링
+### 5.11.3 Hexagonal 아키텍처(Port and Adapter 패턴)에 맞게 서비스를 리펙토링
 
 - Apater, Port, Domain 영역으로 패키지를 분리해 본다.
 
-### 5.10.4 JUNIT을 활용한 테스트코드를 작성
+### 5.11.4 JUNIT을 활용한 테스트코드를 작성
 
 - Junit을 사용하여 단위/통합테스트를 작성해 본다.
 
-#### 5.10.4.1 @WebMvcTest
+#### 5.11.4.1 @WebMvcTest
 
 - Application Context 완전하게 Start 시키지 않고 web layer를 테스트 하고 싶을 때 @WebMvcTest를 사용하는 것을 고려한다. Present Layer 관련 컴포넌트만 스캔을 한다.
 
@@ -3322,7 +3387,7 @@ https://github.com/kirobo77/config.git
   }
   ```
 
-#### 5.10.4.2 MockMvc
+#### 5.11.4.2 MockMvc
 
 -  애플리케이션을 배포하지 않고도, 서버의 MVC 동작을 테스트 할 수 있는 라이브러리이며 Controller 레이어 단위테스트에 많이 사용된다. 
 
@@ -3340,7 +3405,7 @@ https://github.com/kirobo77/config.git
           .andExpect(jsonPath("$.message").value(ErrorCode.OK.getMessage()));
   ```
 
-#### 5.10.4.3 @MockBean
+#### 5.11.4.3 @MockBean
 
 - 가짜 객체를 생성하며 해당 비지니스의 단위 테스트에만 집중할 수 있도록 도와준다. 
 
@@ -3371,16 +3436,16 @@ public class MockBeanAnnotationIntegrationTest {
 
 
 
-### 5.10.5 컨테이너 환경에서 서비스를 실행
+### 5.11.5 컨테이너 환경에서 서비스를 실행
 
-#### 5.10.5.1 JIB
+#### 5.11.5.1 JIB
 
 - Jib을 통한 도커 이미지 생성(https://github.com/GoogleContainerTools/jib)
 - docker daemon 없이도 Java 애플리케이션을 Docker 혹은 OCI 규격의 컨테이너 이미지를 만들어 주는 도구
 -  maven 플러그인 및 gradle 으로 제공되어 Dockerfile 에 대한 별도의 지식 없이도 애플리케이션을 이미지로 만들 수 있다. 
 - JAR를 single layer 로 빌드하는 것이 아니라, Application을 종속성, 리소스, 클래스 등으로 좀 더 세분화 한 Layer로 빌드하여 코드 변경시 증분만을 변경할 수 있어 이미지 생성속도가 빠르다.
 
-#### 5.10.5.2 설정
+#### 5.11.5.2 설정
 
 ```xml
   			<plugin>
@@ -3399,7 +3464,7 @@ public class MockBeanAnnotationIntegrationTest {
   			</plugin>
 ```
 
-#### 5.10.5.3 실행
+#### 5.11.5.3 실행
 
 - jib가 제공하는 Maven의  phase와 goal은 아래의 3가지이다.
   - jib:build : image 를 빌드한다, <to> 의 경로로 push한다.
