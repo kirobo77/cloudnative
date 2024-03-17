@@ -19,34 +19,26 @@
 
 ![img](./assets/clip_image076.gif)
 
- 
-
 가상머신 VS 컨테이너
-
-
 
 ### 1.1.2  Docker 
 
 - 가상머신 체계에서 가상화를 위해 하이퍼바이져가 하는 역할을 컨테이너 체계에서는 컨테이너 런타임이 한다고 볼 수 있다. 
-
 - 컨테이너 생성 및 실행을 위한 다양한 컨테이너 런타임이 존재하며 그 중에서도 Docker는 최근까지도 많이 활용되고 있는 오픈소스 기술이다.
-
 - Docker는 **컨테이너 정보를 Dockerfile로 관리**하고 이 코드를 기반으로 컨테이너 이미지의 복제 및 애플리케이션 배포가 이루어지기 때문에 애플리케이션을 쉽게 다시 빌드하고 배포할 수 있다. 
   
   -  Docker는 이미지 버전 관리, 레이어 구조를 갖는 이미지 포맷 제공, 도커 이미지 레지스트리, 프로그램이 가능한 다양한 기능의 API를 제공하는 등의 특징을 가지고 있다.
-  
 - 동일한 컨테이너 런타임 환경에서는 컨테이너의 이식이 자유롭게 가능하므로 Docker와 같은 활용도가 높은 컨테이너 런타임을 적용하면 이식성을 향상 시킬 수 있다.
 
-  
+### 1.1.3 쿠버네티스(Kubernetes, K8S)
 
-### 1.1.3 Podman
+- **쿠버네티스는 클라우드 네이티브 애플리케이션에서 활용되는 대표적인 오픈소스 중 하나로 이미 산업 표준(De-facto Standard)이라 할 만큼 널리 활용**되고 있는 솔루션이다.
+- 쿠버네티스는 클라우드 환경의 컨테이너 기반 인프라를 추상화하여 하위에 어떤 클라우드가 있는지 종류에 상관없이 쿠버네티스 상에 애플리케이션을 배포하고 관리가 가능하다. 
+  - 최근에는 주요 클라우드 벤더는 **관리형 쿠버네티스 서비스(Amazon Kubernetes Service, Google Kubernetes Engine, Azure Kubernetes Service, NCP(Naver Cloud Platform) - Kubernetes Services 등)를 제공**하고 있으므로 쿠버네티스 기반으로 구성된 애플리케이션의 경우에는 쿠버네티스 환경만 지원한다면 높은 이식성을 확보할 수 있다.
 
--  2017년에 Docker가 엔터프라이즈 버전을 상용화하면서 레드햇은 또다른 컨테이너 오픈소스 기술인 Podman을 사용하여 레드햇의 엔터프라이즈 제품들을 출시하였다. 
-- 2019년 3월에 릴리즈한 Red Hat Enterprise Linux 8에 Podman이 추가되었고 릴리즈 된 Red Hat OpenShift Container Platform 4와 Red Hat OpenStack Platform 16 모두 Docker에서 Podman으로 변경되었다.
-- Podman은 **daemon 없이** 커맨드로 컨테이너 레지스트리로부터 이미지를 받아와 Podman 호스트의 로컬 이미지 저장소에 이미지를 저장하고, 해당 이미지를 이용하여 컨테이너를 실행하는 방식이다.
-- 이때 podman 라이브러리를 통해 바로 컨테이너를 실행하기 때문에 **컨테이너 간에 서로 영향을 주지 않으며, 컨테이너와 이미지 사이, 커맨드 명령어로 컨테이너를 제어하거나 이미지를 관리할 때도 서로 영향을 주지 않는다**.
 
-##  1.2  MSA(MicroService Architecture)
+
+## 1.2  MSA(MicroService Architecture)
 
 ### 1.2.1  개요
 
@@ -124,14 +116,6 @@ https://landscape.cncf.io/
 ![image-20220830094110933](./assets/image-20220830094110933.png)
 
 CNCF Cloud Native Landscape
-
- 
-
-### 1.3.2  쿠버네티스(Kubernetes, K8S)
-
-- **쿠버네티스는 클라우드 네이티브 애플리케이션에서 활용되는 대표적인 오픈소스 중 하나로 이미 산업 표준(De-facto Standard)이라 할 만큼 널리 활용**되고 있는 솔루션이다.
-- 쿠버네티스는 클라우드 환경의 컨테이너 기반 인프라를 추상화하여 하위에 어떤 클라우드가 있는지 종류에 상관없이 쿠버네티스 상에 애플리케이션을 배포하고 관리가 가능하다. 
-  - 최근에는 주요 클라우드 벤더는 **관리형 쿠버네티스 서비스(Amazon Kubernetes Service, Google Kubernetes Engine, Azure Kubernetes Service, NCP(Naver Cloud Platform) - Kubernetes Services 등)를 제공**하고 있으므로 쿠버네티스 기반으로 구성된 애플리케이션의 경우에는 쿠버네티스 환경만 지원한다면 높은 이식성을 확보할 수 있다.
 
  
 
