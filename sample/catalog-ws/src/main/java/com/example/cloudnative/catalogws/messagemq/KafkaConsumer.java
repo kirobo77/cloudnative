@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class KafkaConsumer {
 	@Autowired
 	CatalogRepository repository;
 	
-	//@KafkaListener(topics="example-kafka-test")
+	@KafkaListener(topics="example-kafka-test")
 	@CacheEvict(value="catalogs", allEntries=true)
     public void processMessage(String kafkaMessage, Acknowledgment acknowledgment) {
 		log.info("kafkaMessage : =====> " + kafkaMessage);

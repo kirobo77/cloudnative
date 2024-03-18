@@ -27,7 +27,7 @@ public class CatalogServiceImpl implements CatalogService {
     @Override
     @Cacheable(value="catalogs")
     public Iterable<CatalogEntity> getAllCatalogs() {
-    	log.info("getAllCatalogs");
+    	log.info("getAllCatalogs");    	
         return repository.findAll();
     }
 }

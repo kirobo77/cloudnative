@@ -14,7 +14,6 @@ import com.example.cloudnative.usersws.model.OrderResponseModel;
 import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 
-//@FeignClient(url="http://localhost:50002", name="orders-app-service", fallbackFactory = OrdersFallbackFactory.class)
 @FeignClient(name="order-ws", fallbackFactory = OrdersFallbackFactory.class)
 public interface OrderServiceClient {
 
