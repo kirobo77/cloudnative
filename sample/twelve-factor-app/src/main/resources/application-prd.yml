@@ -1,0 +1,15 @@
+## application-prod.yml (운영 환경)
+spring:
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: validate
+
+app:
+  config:
+    max-connections: ${MAX_CONNECTIONS:50}
+    timeout-seconds: ${TIMEOUT_SECONDS:60}

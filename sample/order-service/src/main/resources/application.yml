@@ -1,0 +1,69 @@
+spring:
+  application:
+    name: order-service
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true  # Spring Boot 3용 설정
+      client:
+        config:
+          default:
+            loggerLevel: basic
+          inventory-service:
+            connectTimeout: 1000     # ms
+            readTimeout: 2000        # ms
+            loggerLevel: full
+
+logging:
+  level:
+   com.example.order.client.circuitbreaker.InventoryClient: DEBUG  # Feign 인터페이스 FQCN						
+server:
+  port: 8080
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}
+
+# Resilience4j 설정
+resilience4j:
+  circuitbreaker:
+    instances:
+      inventoryClient:
+        failure-rate-threshold: 50  # 실패율 50% 이상 시 OPEN
+        slow-call-duration-threshold: 1000  # 1초 이상 소요 시 느린 호출
+        slow-call-rate-threshold: 30  # 느린 호출 비율 30% 이상 시 OPEN
+        wait-duration-in-open-state: 10s  # OPEN -> HALF_OPEN 전환 대기시간
+        minimum-number-of-calls: 5  # 집계 최소 호출 수
+        sliding-window-size: 10  # 슬라이딩 윈도우 크기
+        permitted-number-of-calls-in-half-open-state: 3  # HALF_OPEN에서 허용 호출 수
+        record-exceptions:
+          - java.lang.Exception
+          - feign.FeignException
+  timelimiter:
+    instances:
+      inventoryClient:
+        timeout-duration: 2s  # 타임아웃 시간
+        cancel-running-future: true
+  thread-pool-bulkhead:
+    instances:
+      inventoryClient:
+         max-thread-pool-size: 10 # 최대 풀 사이즈
+         queue-capacity: 50		
+  bulkhead:
+    instances:
+      inventoryClient:
+        max-concurrent-calls: 2  # 최대 동시 호출 수
+        max-wait-duration: 5s  # 큐 대기 시간
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,circuitbreakers,circuitbreakerevents
+  health:
+    circuitbreakers:
+      enabled: true

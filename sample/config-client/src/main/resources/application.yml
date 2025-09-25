@@ -1,0 +1,20 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: config-client
+  profiles:
+    active: local
+  config:
+    # Config Server 연결(없어도 기동되도록 optional)
+    import: "optional:configserver:"
+  cloud:
+    config:
+      uri: http://localhost:8888
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,env,refresh,configprops

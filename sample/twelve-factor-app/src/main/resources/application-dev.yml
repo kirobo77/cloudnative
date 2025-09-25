@@ -1,0 +1,19 @@
+## application-dev.yml (개발 환경)
+spring:
+  datasource:
+    url: jdbc:h2:mem:devdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: 
+  h2:
+    console:
+      enabled: true
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+
+app:
+  config:
+    max-connections: 10
+    timeout-seconds: 30
