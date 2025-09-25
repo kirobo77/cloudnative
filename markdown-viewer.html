@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마크다운 파일 뷰어 (Mermaid 지원)</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .main-layout {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* 목차 사이드바 */
+        .toc-sidebar {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
+            border-right: 1px solid rgba(102, 126, 234, 0.2);
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+            transform: translateX(-280px);
+            transition: transform 0.3s ease;
+            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .toc-sidebar.open {
+            transform: translateX(0);
+        }
+
+        .toc-header {
+            padding: 20px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .toc-header h3 {
+            font-size: 1.1em;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toc-content {
+            padding: 20px;
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-item {
+            margin: 8px 0;
+        }
+
+        .toc-link {
+            display: block;
+            padding: 8px 12px;
+            color: #4a5568;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            font-size: 0.9em;
+            line-height: 1.4;
+            border-left: 3px solid transparent;
+        }
+
+        .toc-link:hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            border-left-color: #667eea;
+        }
+
+        .toc-link.active {
+            background: rgba(102, 126, 234, 0.15);
+            color: #667eea;
+            border-left-color: #667eea;
+            font-weight: 500;
+        }
+
+        .toc-h1 { margin-left: 0; font-weight: 600; }
+        .toc-h2 { margin-left: 16px; }
+        .toc-h3 { margin-left: 32px; }
+        .toc-h4 { margin-left: 48px; }
+        .toc-h5 { margin-left: 64px; }
+        .toc-h6 { margin-left: 80px; }
+
+        /* 토글 버튼 */
+        .toc-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+            background: rgba(102, 126, 234, 0.9);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toc-toggle:hover {
+            background: rgba(102, 126, 234, 1);
+            transform: scale(1.05);
+        }
+
+        .toc-toggle.active {
+            left: 300px;
+        }
+
+        /* 메인 컨텐츠 영역 */
+        .main-content {
+            flex: 1;
+            transition: margin-left 0.3s ease;
+            margin-left: 0;
+        }
+
+        .main-content.shifted {
+            margin-left: 280px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .header p {
+            text-align: center;
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .feature-tag {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        .upload-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .file-input {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-input-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .file-input-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .file-input-button:active {
+            transform: translateY(0);
+        }
+
+        .file-info {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 4px solid #667eea;
+            display: none;
+        }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            min-height: 400px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .markdown-content {
+            line-height: 1.7;
+            color: #333;
+        }
+
+        .markdown-content h1,
+        .markdown-content h2,
+        .markdown-content h3,
+        .markdown-content h4,
+        .markdown-content h5,
+        .markdown-content h6 {
+            scroll-margin-top: 100px;
+        }
+
+        .markdown-content h1 {
+            font-size: 2.2em;
+            color: #2c3e50;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin: 30px 0 20px 0;
+        }
+
+        .markdown-content h2 {
+            font-size: 1.8em;
+            color: #34495e;
+            margin: 25px 0 15px 0;
+            padding-left: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .markdown-content h3 {
+            font-size: 1.4em;
+            color: #4a5568;
+            margin: 20px 0 12px 0;
+        }
+
+        .markdown-content p {
+            margin: 15px 0;
+            font-size: 1.05em;
+        }
+
+        .markdown-content blockquote {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            margin: 20px 0;
+            padding: 15px 20px;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .markdown-content ul, .markdown-content ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        .markdown-content li {
+            margin: 8px 0;
+        }
+
+        .markdown-content a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .markdown-content a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .markdown-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .markdown-content th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .markdown-content td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .markdown-content tr:hover {
+            background: #f8f9fa;
+        }
+
+        .markdown-content pre {
+            background: #2d3748;
+            border-radius: 10px;
+            padding: 20px;
+            overflow-x: auto;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .markdown-content code {
+            background: #f1f3f4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: #e91e63;
+        }
+
+        .markdown-content pre code {
+            background: transparent;
+            color: #e2e8f0;
+            padding: 0;
+        }
+
+        .markdown-content img {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+
+        /* 코드 블록 복사 버튼 스타일 */
+        .code-block-wrapper {
+            position: relative;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #e2e8f0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.8em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            opacity: 0.7;
+        }
+
+        .copy-button:hover {
+            background: rgba(102, 126, 234, 0.8);
+            opacity: 1;
+            transform: translateY(-1px);
+        }
+
+        .copy-button.copied {
+            background: rgba(76, 175, 80, 0.8);
+            border-color: rgba(76, 175, 80, 0.3);
+        }
+
+        .copy-button::before {
+            content: "📋";
+            font-size: 0.9em;
+        }
+
+        .copy-button.copied::before {
+            content: "✓";
+        }
+
+        /* Mermaid 다이어그램 스타일 */
+        .mermaid-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #fcc;
+            margin: 15px 0;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        /* 오버레이 */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* 빈 목차 메시지 */
+        .toc-empty {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            padding: 20px;
+        }
+
+        /* 토스트 메시지 */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(76, 175, 80, 0.9);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            z-index: 2000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        @media (max-width: 768px) {
+            .toc-sidebar {
+                width: 260px;
+                transform: translateX(-260px);
+            }
+
+            .toc-toggle.active {
+                left: 280px;
+            }
+
+            .main-content.shifted {
+                margin-left: 0;
+            }
+
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .markdown-content h1 {
+                font-size: 1.8em;
+            }
+            
+            .markdown-content h2 {
+                font-size: 1.5em;
+            }
+
+            .features {
+                gap: 10px;
+            }
+
+            .feature-tag {
+                font-size: 0.8em;
+                padding: 6px 12px;
+            }
+
+            .copy-button {
+                top: 5px;
+                right: 5px;
+                padding: 6px 10px;
+                font-size: 0.7em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-layout">
+        <!-- 오버레이 -->
+        <div class="overlay" id="overlay"></div>
+        
+        <!-- 목차 토글 버튼 -->
+        <button class="toc-toggle" id="tocToggle">☰</button>
+        
+        <!-- 목차 사이드바 -->
+        <div class="toc-sidebar" id="tocSidebar">
+            <div class="toc-header">
+                <h3>📋 목차</h3>
+            </div>
+            <div class="toc-content">
+                <ul class="toc-list" id="tocList">
+                    <li class="toc-empty">문서를 로드하면 목차가 여기에 표시됩니다.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 메인 콘텐츠 -->
+        <div class="main-content" id="mainContent">
+            <div class="container">
+                <div class="header">
+                    <h1>📄 마크다운 파일 뷰어</h1>
+                    <p>로컬 마크다운 파일을 업로드하여 아름답게 렌더링된 결과를 확인하세요</p>
+                    <div class="features">
+                        <span class="feature-tag">📊 Mermaid 다이어그램</span>
+                        <span class="feature-tag">🎨 코드 하이라이팅</span>
+                        <span class="feature-tag">📱 반응형 디자인</span>
+                        <span class="feature-tag">🚀 드래그 앤 드롭</span>
+                        <span class="feature-tag">📋 자동 목차</span>
+                        <span class="feature-tag">📋 코드 복사</span>
+                    </div>
+                </div>
+
+                <div class="upload-section">
+                    <div class="file-input-wrapper">
+                        <input type="file" id="markdownFile" class="file-input" accept=".md,.markdown,.txt">
+                        <button class="file-input-button">
+                            📁 마크다운 파일 선택하기
+                        </button>
+                    </div>
+                    <div id="fileInfo" class="file-info">
+                        <strong>선택된 파일:</strong> <span id="fileName"></span><br>
+                        <strong>파일 크기:</strong> <span id="fileSize"></span><br>
+                        <strong>수정일:</strong> <span id="fileDate"></span>
+                        <div id="fileStats" class="stats"></div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div id="content">
+                        <div style="text-align: center; padding: 60px 20px; color: #666;">
+                            <div style="font-size: 4em; margin-bottom: 20px;">📄</div>
+                            <h3>마크다운 파일을 선택해주세요</h3>
+                            <p>위의 버튼을 클릭하여 .md 파일을 업로드하면 여기에 렌더링됩니다.</p>
+                            <div style="margin-top: 20px; font-size: 0.9em; color: #888;">
+                                <p>✨ 지원 기능:</p>
+                                <p>• 기본 마크다운 문법 (제목, 목록, 표, 링크 등)</p>
+                                <p>• 코드 블록 구문 강조 (Python, JavaScript, JSON, Bash 등)</p>
+                                <p>• Mermaid 다이어그램 (flowchart, sequence, gantt, pie 등)</p>
+                                <p>• 드래그 앤 드롭으로 파일 업로드</p>
+                                <p>• 자동 목차 생성 및 네비게이션</p>
+                                <p>• 코드 블록 원클릭 복사 기능</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 토스트 메시지 -->
+    <div class="toast" id="toast">
+        코드가 클립보드에 복사되었습니다!
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('markdownFile');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileName = document.getElementById('fileName');
+        const fileSize = document.getElementById('fileSize');
+        const fileDate = document.getElementById('fileDate');
+        const fileStats = document.getElementById('fileStats');
+        const content = document.getElementById('content');
+        const tocToggle = document.getElementById('tocToggle');
+        const tocSidebar = document.getElementById('tocSidebar');
+        const mainContent = document.getElementById('mainContent');
+        const overlay = document.getElementById('overlay');
+        const tocList = document.getElementById('tocList');
+        const toast = document.getElementById('toast');
+
+        let tocOpen = false;
+
+        // Mermaid 초기화
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'default',
+            themeVariables: {
+                primaryColor: '#667eea',
+                primaryTextColor: '#333',
+                primaryBorderColor: '#667eea',
+                lineColor: '#667eea',
+                secondaryColor: '#f8f9fa',
+                tertiaryColor: '#e2e8f0'
+            },
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true
+            },
+            sequence: {
+                useMaxWidth: true,
+                wrap: true
+            },
+            gantt: {
+                useMaxWidth: true
+            }
+        });
+        
+        // 마크다운 파싱 옵션 설정
+        marked.setOptions({
+            highlight: function(code, lang) {
+                if (lang && Prism.languages[lang]) {
+                    return Prism.highlight(code, Prism.languages[lang], lang);
+                }
+                return code;
+            },
+            breaks: true,
+            gfm: true
+        });
+
+        // 토스트 메시지 표시 함수
+        function showToast(message = '코드가 클립보드에 복사되었습니다!') {
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // 코드 블록에 복사 버튼 추가 함수
+        function addCopyButtonsToCodeBlocks() {
+            const codeBlocks = document.querySelectorAll('pre code');
+            
+            codeBlocks.forEach((codeBlock) => {
+                const pre = codeBlock.parentElement;
+                
+                // 이미 복사 버튼이 있는지 확인
+                if (pre.querySelector('.copy-button')) {
+                    return;
+                }
+
+                // wrapper div로 감싸기
+                const wrapper = document.createElement('div');
+                wrapper.className = 'code-block-wrapper';
+                pre.parentNode.insertBefore(wrapper, pre);
+                wrapper.appendChild(pre);
+
+                // 복사 버튼 생성
+                const copyButton = document.createElement('button');
+                copyButton.className = 'copy-button';
+                copyButton.textContent = '복사';
+                copyButton.title = '코드 복사하기';
+
+                // 복사 기능 구현
+                copyButton.addEventListener('click', async () => {
+                    try {
+                        const codeText = codeBlock.textContent;
+                        await navigator.clipboard.writeText(codeText);
+                        
+                        // 버튼 상태 변경
+                        copyButton.textContent = '복사됨!';
+                        copyButton.classList.add('copied');
+                        
+                        // 토스트 메시지 표시
+                        showToast();
+                        
+                        // 3초 후 원래 상태로 복구
+                        setTimeout(() => {
+                            copyButton.textContent = '복사';
+                            copyButton.classList.remove('copied');
+                        }, 3000);
+                        
+                    } catch (err) {
+                        console.error('복사 실패:', err);
+                        
+                        // fallback: 텍스트 선택
+                        const range = document.createRange();
+                        range.selectNodeContents(codeBlock);
+                        const selection = window.getSelection();
+                        selection.removeAllRanges();
+                        selection.addRange(range);
+                        
+                        copyButton.textContent = '선택됨';
+                        setTimeout(() => {
+                            copyButton.textContent = '복사';
+                        }, 2000);
+                    }
+                });
+
+                // wrapper에 복사 버튼 추가
+                wrapper.appendChild(copyButton);
+            });
+        }
+
+        // 목차 토글 기능
+        tocToggle.addEventListener('click', function() {
+            tocOpen = !tocOpen;
+            if (tocOpen) {
+                tocSidebar.classList.add('open');
+                tocToggle.classList.add('active');
+                overlay.classList.add('show');
+                if (window.innerWidth > 768) {
+                    mainContent.classList.add('shifted');
+                }
+            } else {
+                tocSidebar.classList.remove('open');
+                tocToggle.classList.remove('active');
+                overlay.classList.remove('show');
+                mainContent.classList.remove('shifted');
+            }
+        });
+
+        // 오버레이 클릭 시 목차 닫기
+        overlay.addEventListener('click', function() {
+            if (tocOpen) {
+                tocToggle.click();
+            }
+        });
+
+        // 목차 생성 함수 (개선된 버전)
+        function generateTOC(htmlContent) {
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = htmlContent;
+            
+            const headings = tempDiv.querySelectorAll('h1, h2, h3, h4, h5, h6');
+            tocList.innerHTML = '';
+
+            if (headings.length === 0) {
+                tocList.innerHTML = '<li class="toc-empty">목차가 없습니다.</li>';
+                return;
+            }
+
+            headings.forEach((heading, index) => {
+                const level = parseInt(heading.tagName.charAt(1));
+                const text = heading.textContent.trim();
+                const id = `heading-${index}`;
+                
+                // 원본 헤딩에 ID 추가
+                heading.id = id;
+                
+                // 목차 항목 생성
+                const li = document.createElement('li');
+                li.className = 'toc-item';
+                
+                const link = document.createElement('a');
+                link.className = `toc-link toc-h${level}`;
+                link.href = `#${id}`;
+                link.textContent = text;
+                link.setAttribute('data-target', id); // data-target 속성 추가
+                
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    scrollToHeading(id);
+                    
+                    // 모바일에서는 목차 닫기
+                    if (window.innerWidth <= 768) {
+                        tocToggle.click();
+                    }
+                });
+                
+                li.appendChild(link);
+                tocList.appendChild(li);
+            });
+
+            // 업데이트된 HTML 반환 (헤딩에 ID가 추가된 상태)
+            return tempDiv.innerHTML;
+        }
+
+        // 헤딩으로 스크롤하는 함수 (개선된 버전)
+        function scrollToHeading(headingId) {
+            const target = document.getElementById(headingId);
+            if (target) {
+                const headerOffset = 80; // 고정 헤더나 여백을 위한 오프셋
+                const elementPosition = target.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+
+                // 스크롤 후 활성 헤딩 업데이트
+                setTimeout(() => {
+                    updateActiveHeading();
+                }, 500);
+            }
+        }
+
+        // 활성 헤딩 업데이트 함수 (개선된 버전)
+        function updateActiveHeading() {
+            const headings = document.querySelectorAll('[id^="heading-"]');
+            const tocLinks = document.querySelectorAll('.toc-link');
+            
+            if (headings.length === 0) return;
+
+            let activeHeading = null;
+            const scrollTop = window.pageYOffset;
+            const windowHeight = window.innerHeight;
+
+            // 현재 뷰포트에서 가장 적절한 헤딩 찾기
+            for (let i = 0; i < headings.length; i++) {
+                const heading = headings[i];
+                const rect = heading.getBoundingClientRect();
+                
+                // 헤딩이 화면 상단 1/3 지점에 있거나 위에 있으면 활성화
+                if (rect.top <= windowHeight / 3) {
+                    activeHeading = heading;
+                } else {
+                    break;
+                }
+            }
+
+            // 만약 페이지 최상단이면 첫 번째 헤딩을 활성화
+            if (scrollTop < 100 && headings.length > 0) {
+                activeHeading = headings[0];
+            }
+
+            // 모든 목차 링크에서 active 클래스 제거
+            tocLinks.forEach(link => link.classList.remove('active'));
+
+            // 활성 헤딩에 해당하는 목차 링크에 active 클래스 추가
+            if (activeHeading) {
+                const activeLink = document.querySelector(`a[data-target="${activeHeading.id}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                    
+                    // 활성 링크가 목차 영역에서 보이도록 스크롤
+                    const tocContent = document.querySelector('.toc-content');
+                    const linkRect = activeLink.getBoundingClientRect();
+                    const tocRect = tocContent.getBoundingClientRect();
+                    
+                    if (linkRect.top < tocRect.top || linkRect.bottom > tocRect.bottom) {
+                        activeLink.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                    }
+                }
+            }
+        }
+
+        // URL 해시 변경 감지 및 처리
+        function handleHashChange() {
+            const hash = window.location.hash;
+            if (hash && hash.startsWith('#heading-')) {
+                const headingId = hash.substring(1);
+                scrollToHeading(headingId);
+            }
+        }
+
+        // 페이지 로드 시 URL 해시 처리
+        window.addEventListener('hashchange', handleHashChange);
+        window.addEventListener('load', handleHashChange);
+
+        // 스크롤 이벤트 리스너 (성능 최적화)
+        let scrollTimeout;
+        window.addEventListener('scroll', function() {
+            if (scrollTimeout) {
+                clearTimeout(scrollTimeout);
+            }
+            scrollTimeout = setTimeout(updateActiveHeading, 50);
+        });
+
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // 파일 정보 표시
+            fileName.textContent = file.name;
+            fileSize.textContent = formatFileSize(file.size);
+            fileDate.textContent = new Date(file.lastModified).toLocaleString('ko-KR');
+            fileInfo.style.display = 'block';
+
+            // 로딩 표시
+            content.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>파일을 읽는 중입니다...</p>
+                </div>
+            `;
+
+            // 파일 읽기
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const markdownText = e.target.result;
+                    processMarkdownWithMermaid(markdownText);
+                    
+                } catch (error) {
+                    content.innerHTML = `
+                        <div class="error-message">
+                            <strong>오류가 발생했습니다:</strong> ${error.message}
+                        </div>
+                    `;
+                }
+            };
+
+            reader.onerror = function() {
+                content.innerHTML = `
+                    <div class="error-message">
+                        <strong>파일 읽기 오류:</strong> 파일을 읽을 수 없습니다.
+                    </div>
+                `;
+            };
+
+            reader.readAsText(file, 'utf-8');
+        });
+        
+        // 마크다운 처리 (Mermaid 지원)
+        async function processMarkdownWithMermaid(markdownText) {
+            // 통계 계산
+            const stats = calculateStats(markdownText);
+            displayStats(stats);
+
+            // Mermaid 블록 찾기 및 처리
+            let processedContent = markdownText;
+            const mermaidBlocks = [];
+            const mermaidRegex = /```mermaid\r?\n([\s\S]*?)```/g;
+            let match;
+            let blockIndex = 0;
+
+            // Mermaid 블록을 임시 플레이스홀더로 교체
+            while ((match = mermaidRegex.exec(markdownText)) !== null) {
+                const placeholder = `MERMAID_BLOCK_${blockIndex}`;
+                mermaidBlocks.push({
+                    index: blockIndex,
+                    content: match[1].trim(),
+                    placeholder: placeholder
+                });
+                processedContent = processedContent.replace(match[0], placeholder);
+                blockIndex++;
+            }
+
+            // 일반 마크다운 처리
+            let html = marked.parse(processedContent);
+
+            // Mermaid 블록을 다시 삽입
+            for (const block of mermaidBlocks) {
+                const mermaidId = `mermaid-${block.index}-${Date.now()}`;
+                const mermaidHtml = `
+                    <div class="mermaid-container">
+                        <div class="mermaid" id="${mermaidId}">${block.content}</div>
+                    </div>
+                `;
+                html = html.replace(block.placeholder, mermaidHtml);
+            }
+
+            // 목차 생성 (헤딩에 ID 추가)
+            const updatedHtml = generateTOC(html);
+            
+            // 콘텐츠 렌더링
+            content.innerHTML = `<div class="markdown-content">${updatedHtml}</div>`;
+            
+            // 코드 하이라이팅 및 복사 버튼 추가
+            setTimeout(() => {
+                Prism.highlightAll();
+                // 코드 복사 버튼 추가
+                addCopyButtonsToCodeBlocks();
+            }, 200);
+
+            // Mermaid 다이어그램 렌더링
+            if (mermaidBlocks.length > 0) {
+                try {
+                    await mermaid.run();
+                } catch (error) {
+                    console.error('Mermaid rendering error:', error);
+                    // 오류 발생 시 원본 텍스트 표시
+                    mermaidBlocks.forEach(block => {
+                        const elements = document.querySelectorAll(`[id^="mermaid-${block.index}-"]`);
+                        elements.forEach(element => {
+                            if (element) {
+                                element.innerHTML = `
+                                    <div class="error-message">
+                                        <strong>Mermaid 다이어그램 렌더링 오류:</strong><br>
+                                        <pre>${block.content}</pre>
+                                    </div>
+                                `;
+                            }
+                        });
+                    });
+                }
+            }
+
+            // 초기 활성 헤딩 업데이트
+            setTimeout(() => {
+                updateActiveHeading();
+            }, 500);
+        }
+
+        // 통계 계산
+        function calculateStats(text) {
+            const lines = text.split('\n').length;
+            const words = text.trim().split(/\s+/).length;
+            const chars = text.length;
+            const mermaidBlocks = (text.match(/```mermaid/g) || []).length;
+            const codeBlocks = (text.match(/```/g) || []).length / 2;
+            const headers = (text.match(/^#{1,6}\s/gm) || []).length;
+            
+            return { lines, words, chars, mermaidBlocks, codeBlocks, headers };
+        }
+
+        // 통계 표시
+        function displayStats(stats) {
+            fileStats.innerHTML = `
+                <div class="stat-item">📄 ${stats.lines} 줄</div>
+                <div class="stat-item">📝 ${stats.words} 단어</div>
+                <div class="stat-item">📊 ${stats.mermaidBlocks} 다이어그램</div>
+                <div class="stat-item">💻 ${stats.codeBlocks} 코드블록</div>
+                <div class="stat-item">📋 ${stats.headers} 제목</div>
+            `;
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // 드래그 앤 드롭 기능
+        const uploadSection = document.querySelector('.container');
+
+        uploadSection.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            uploadSection.style.background = 'rgba(102, 126, 234, 0.1)';
+            uploadSection.style.borderColor = '#667eea';
+        });
+
+        uploadSection.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            uploadSection.style.background = 'rgba(255, 255, 255, 0.95)';
+            uploadSection.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+        });
+
+        uploadSection.addEventListener('drop', function(e) {
+            e.preventDefault();
+            uploadSection.style.background = 'rgba(255, 255, 255, 0.95)';
+            uploadSection.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                fileInput.files = files;
+                fileInput.dispatchEvent(new Event('change'));
+            }
+        });
+
+        // 윈도우 리사이즈 시 목차 처리
+        window.addEventListener('resize', function() {
+            if (window.innerWidth <= 768 && tocOpen) {
+                mainContent.classList.remove('shifted');
+            } else if (window.innerWidth > 768 && tocOpen) {
+                mainContent.classList.add('shifted');
+            }
+        });
+    </script>
+</body>
+</html>
